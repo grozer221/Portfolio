@@ -35,9 +35,9 @@ namespace Portfolio.Controllers
                 {
                     await Authenticate(model.Email);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Projects");
                 }
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                ModelState.AddModelError("", "Wrong login or password");
             }
             return View(model);
         }
@@ -62,10 +62,10 @@ namespace Portfolio.Controllers
 
                     await Authenticate(model.Email); 
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Projects");
                 }
                 else
-                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                    ModelState.AddModelError("", "Wrong login or password");
             }
             return View(model);
         }
@@ -83,7 +83,7 @@ namespace Portfolio.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Index", "Projects");
         }
     }
 }

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<ProjectModel>
+
+@{
+    ViewData["Title"] = "Grozer`s Portfolio";
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-dark">Create New</a>
+</p>
+<div class="d-flex flex-wrap">
+    @foreach (var item in Model)
+    {
+        <div class="border">
+            <div>
+                @item.Name
+            </div>
+            <div>
+                @if (@item.SiteLink != null)
+                {
+                    <a target="_blank" href="@item.SiteLink">
+                        <button class="btn">
+                            <img width="30" src="https://icon-library.com/images/icon-link/icon-link-29.jpg" alt="SiteLink" />
+                        </button>
+                    </a>
+                }
+                @if (@item.DesktopAppLink != null)
+                {
+                    <a target="_blank" href="@item.DesktopAppLink">
+                        <button class="btn">
+                            <img width="30" src="https://www.vippng.com/png/full/141-1416602_png-file-svg-desktop-icon-black-white.png" alt="DesktopAppLink" />
+                        </button>
+                    </a>
+                }
+                @if (@item.AndroidAppLink != null)
+                {
+                    <a target="_blank" href="@item.AndroidAppLink">
+                        <button class="btn">
+                            <img width="30" src="https://e7.pngegg.com/pngimages/685/725/png-clipart-android-computer-icons-operating-systems-android-logo-development.png" alt="AndroidAppLink" />
+                        </button>
+                    </a>
+                }
+                @if (@item.IOSAppLink != null)
+                {
+                    <a target="_blank" href="@item.IOSAppLink">
+                        <button class="btn">
+                            <img width="30" src="http://cdn.onlinewebfonts.com/svg/img_428982.png" alt="IOSAppLink" />
+                        </button>
+                    </a>
+                }
+
+            </div>
+            <div>
+                <a asp-action="Edit" asp-route-id="@item.Id">
+                    <button class="btn btn-outline-primary">Edit</button>
+                </a>
+                <a asp-action="Details" asp-route-id="@item.Id">
+                    <button class="btn btn-primary">Details</button>
+                </a>
+                <a asp-action="Delete" asp-route-id="@item.Id">
+                    <button class="btn btn-danger">Delete</button>
+                </a>
+            </div>
+        </div>
+    }
+</div>

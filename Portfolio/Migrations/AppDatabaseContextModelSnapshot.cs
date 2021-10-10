@@ -18,6 +18,33 @@ namespace Portfolio.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Portfolio.Models.ProjectModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AndroidAppLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DesktopAppLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IOSAppLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SiteLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Projects");
+                });
+
             modelBuilder.Entity("Portfolio.Models.UserModel", b =>
                 {
                     b.Property<int>("Id")
