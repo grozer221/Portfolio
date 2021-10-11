@@ -12,5 +12,6 @@ namespace Portfolio
 
         public DbSet<UserModel> Users { get; set; }
         public DbSet<ProjectModel> Projects { get; set; }
+        public DbSet<RoleModel> Roles { get; set; }
     }
 }

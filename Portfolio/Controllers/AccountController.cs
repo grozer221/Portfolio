@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+using Portfolio.Models;
 using Portfolio.ViewModels;
-using Portfolio.Models; 
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -30,12 +30,11 @@ namespace Portfolio.Controllers
         {
             if (ModelState.IsValid)
             {
-                UserModel user = await _ctx.Users.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
+                UserModel user = await _ctx.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
                 if (user != null)
                 {
-                    await Authenticate(model.Email);
-
-                    return RedirectToAction("Index", "Projects");
+                    await Authenticate(user.Login, user.Role.RoleName);
+                    return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Wrong login or password");
             }
@@ -54,15 +53,15 @@ namespace Portfolio.Controllers
         {
             if (ModelState.IsValid)
             {
-                UserModel user = await _ctx.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+                UserModel user = await _ctx.Users.FirstOrDefaultAsync(u => u.Login == model.Login);
                 if (user == null)
                 {
-                    _ctx.Users.Add(new UserModel { Email = model.Email, Password = model.Password });
+                    var userRole = await _ctx.Roles.FirstOrDefaultAsync(r => r.RoleName == "user");
+                    user = new UserModel { Login = model.Login, Password = model.Password, Role = userRole };
+                    _ctx.Users.Add(user);
                     await _ctx.SaveChangesAsync();
-
-                    await Authenticate(model.Email); 
-
-                    return RedirectToAction("Index", "Projects");
+                    await Authenticate(user.Login, user.Role.RoleName);
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                     ModelState.AddModelError("", "Wrong login or password");
@@ -70,11 +69,12 @@ namespace Portfolio.Controllers
             return View(model);
         }
 
-        private async Task Authenticate(string userName)
+        private async Task Authenticate(string userName, string roleName)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+                new Claim(ClaimsIdentity.DefaultNameClaimType, userName),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, roleName),
             };
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
@@ -83,7 +83,7 @@ namespace Portfolio.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "Projects");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
