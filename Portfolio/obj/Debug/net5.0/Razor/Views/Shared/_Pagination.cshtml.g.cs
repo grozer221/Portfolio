@@ -19,49 +19,28 @@ using Portfolio;
 #line hidden
 #nullable disable
 #nullable restore
+#line 2 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
+using Portfolio.Models;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 3 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
-using Portfolio.Models.Account;
+using Portfolio.ViewModels;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
-using Portfolio.Models.Projects;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 6 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
-using Portfolio.ViewModels.Account;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 7 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
-using Portfolio.ViewModels.Projects;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 8 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
-using Portfolio.ViewModels.Common;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 10 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
+#line 5 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
 using System;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"c51d6a6a98bcd7a816774fccddf69abb7b4e1855", @"/Views/Shared/_Pagination.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"16c1dc92e8cb7cb89734819e0424ee729a9a8d30", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"04ea8da3212a9b912832cc2d13b03e798754e023", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared__Pagination : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<PageViewModel>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("class", new global::Microsoft.AspNetCore.Html.HtmlString("page-link"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -102,7 +81,7 @@ WriteAttributeValue(" ", 148, Model.HasPreviousPage ? "" : "disabled", 149, 42, 
 #nullable disable
             EndWriteAttribute();
             WriteLiteral(">\r\n            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c51d6a6a98bcd7a816774fccddf69abb7b4e18555148", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c51d6a6a98bcd7a816774fccddf69abb7b4e18554609", async() => {
                 WriteLiteral("Previous");
             }
             );
@@ -152,7 +131,7 @@ WriteAttributeValue(" ", 425, Model.HasNextPage ? "" : "disabled", 426, 38, fals
 #nullable disable
             EndWriteAttribute();
             WriteLiteral(">\r\n            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c51d6a6a98bcd7a816774fccddf69abb7b4e18558074", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c51d6a6a98bcd7a816774fccddf69abb7b4e18557535", async() => {
                 WriteLiteral("Next");
             }
             );

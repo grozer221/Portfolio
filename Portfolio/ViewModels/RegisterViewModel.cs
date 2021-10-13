@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Portfolio.ViewModels.Account
+namespace Portfolio.ViewModels
 {
     public class RegisterViewModel
     {

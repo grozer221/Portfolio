@@ -1,7 +1,7 @@
-﻿using Portfolio.Models.Projects;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace Portfolio.Models.Account
+namespace Portfolio.Models
 {
     public class UserModel
     {
@@ -10,5 +10,6 @@ namespace Portfolio.Models.Account
         public string Password { get; set; }
         public virtual RoleModel Role { get; set; }
         public virtual List<ProjectModel> Projects { get; set; }
+        public virtual List<TechnologyModel> Technologies { get; set; }
     }
 }

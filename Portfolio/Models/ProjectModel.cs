@@ -1,11 +1,14 @@
-﻿using Portfolio.Models.Account;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Portfolio.Models.Projects
+namespace Portfolio.Models
 {
     public class ProjectModel
     {
         public int Id { get; set; }
+        [Required(ErrorMessage ="Project must have name")]
+        [MinLength(2, ErrorMessage = "Project must have lenght longer then 2")]
         public string Name { get; set; }
         public string Description { get; set; }
         [Display(Name = "Site link")]
@@ -16,6 +19,9 @@ namespace Portfolio.Models.Projects
         public string AndroidAppLink { get; set; }
         [Display(Name = "IOS app link")]
         public string IOSAppLink { get; set; }
-        public virtual UserModel User { get; set; }
+        public virtual UserModel CreatedByUser { get; set; }
+        public virtual List<TechnologyModel> Technologies { get; set; }
+        [NotMapped]
+        public int[] TechnologiesIds { get; set; }
     }
 }

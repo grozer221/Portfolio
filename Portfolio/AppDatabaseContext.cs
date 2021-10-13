@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Portfolio.Models.Account;
-using Portfolio.Models.Projects;
+using Portfolio.Models;
 
 namespace Portfolio
 {
@@ -14,5 +13,6 @@ namespace Portfolio
         public DbSet<UserModel> Users { get; set; }
         public DbSet<ProjectModel> Projects { get; set; }
         public DbSet<RoleModel> Roles { get; set; }
+        public DbSet<TechnologyModel> Technologies { get; set; }
     }
 }

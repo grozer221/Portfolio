@@ -19,49 +19,28 @@ using Portfolio;
 #line hidden
 #nullable disable
 #nullable restore
+#line 2 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
+using Portfolio.Models;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 3 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
-using Portfolio.Models.Account;
+using Portfolio.ViewModels;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
-using Portfolio.Models.Projects;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 6 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
-using Portfolio.ViewModels.Account;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 7 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
-using Portfolio.ViewModels.Projects;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 8 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
-using Portfolio.ViewModels.Common;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 10 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
+#line 5 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
 using System;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"da591878f53e874add6fa98f2d7a5b8e21b060b7", @"/Views/Home/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"16c1dc92e8cb7cb89734819e0424ee729a9a8d30", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"04ea8da3212a9b912832cc2d13b03e798754e023", @"/Views/_ViewImports.cshtml")]
     public class Views_Home_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998

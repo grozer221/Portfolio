@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Repositories;
-using Portfolio.ViewModels.Common;
-using Portfolio.ViewModels.Projects;
+using Portfolio.ViewModels;
 
 namespace Portfolio.Controllers
 {
@@ -26,7 +25,7 @@ namespace Portfolio.Controllers
             var items = await _projectsRep.GetProjects(page, pageSize);
 
             PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
-            IndexViewModel viewModel = new IndexViewModel
+            ProjectsIndexViewModel viewModel = new ProjectsIndexViewModel
             {
                 Page = pageViewModel,
                 Projects = items

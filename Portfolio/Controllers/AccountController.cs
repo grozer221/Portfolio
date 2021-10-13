@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Portfolio.ViewModels.Account;
+using Portfolio.ViewModels;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Portfolio.Models.Account;
+using Portfolio.Models;
 using Portfolio.Repositories;
 
 namespace Portfolio.Controllers

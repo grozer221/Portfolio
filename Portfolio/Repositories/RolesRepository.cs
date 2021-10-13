@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Portfolio.Models.Account;
+using Portfolio.Models;
 using System.Threading.Tasks;
 
 namespace Portfolio.Repositories

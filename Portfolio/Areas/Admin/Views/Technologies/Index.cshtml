@@ -1,0 +1,41 @@
+﻿@model TechnologiesIndexViewModel
+
+@{
+    ViewData["Title"] = "Technologies";
+}
+
+<h1>Technologies</h1>
+
+<p>
+    <a class="btn btn-dark" asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(modelItem => modelItem.Technologies[0].Name)</th>
+        <th>@Html.DisplayNameFor(modelItem => modelItem.Technologies[0].DateCreate)</th>
+        <th>@Html.DisplayNameFor(modelItem => modelItem.Technologies[0].DateLastChange)</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var technology in Model.Technologies)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => technology.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => technology.DateCreate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => technology.DateLastChange)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@technology.Id" class="btn btn-outline-primary">Edit</a>
+                <a asp-action="Details" asp-route-id="@technology.Id" class="btn btn-primary">Details</a>
+                <a asp-action="Delete" asp-route-id="@technology.Id" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    }
+</table>
+
+<partial name="_Pagination" model="Model.Page" />
+

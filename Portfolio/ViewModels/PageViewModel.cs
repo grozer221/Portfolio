@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Portfolio.ViewModels.Common
+namespace Portfolio.ViewModels
 {
     public class PageViewModel
     {
