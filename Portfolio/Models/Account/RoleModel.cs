@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Portfolio.Models
+namespace Portfolio.Models.Account
 {
     public class RoleModel
     {

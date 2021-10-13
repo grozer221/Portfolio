@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Portfolio.Models.Account;
+using System.ComponentModel.DataAnnotations;
 
-namespace Portfolio.Models
+namespace Portfolio.Models.Projects
 {
     public class ProjectModel
     {

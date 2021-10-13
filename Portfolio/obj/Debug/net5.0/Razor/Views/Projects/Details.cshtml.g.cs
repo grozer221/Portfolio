@@ -19,28 +19,49 @@ using Portfolio;
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
-using Portfolio.Models;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
 #line 3 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
-using Portfolio.ViewModels;
+using Portfolio.Models.Account;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 4 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
+using Portfolio.Models.Projects;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 6 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
+using Portfolio.ViewModels.Account;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 7 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
+using Portfolio.ViewModels.Projects;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 8 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
+using Portfolio.ViewModels.Common;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 10 "D:\Projects\Portfolio\Portfolio\Views\_ViewImports.cshtml"
 using System;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"eb8e06f3c951d1ded47a332910c10e5542e0ba84", @"/Views/Projects/Details.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"66e8a371444838b7a488562fbd5361ec71e3f244", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"16c1dc92e8cb7cb89734819e0424ee729a9a8d30", @"/Views/_ViewImports.cshtml")]
     public class Views_Projects_Details : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<ProjectModel>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "Index", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -166,7 +187,7 @@ using System;
 #line hidden
 #nullable disable
             WriteLiteral("\r\n        </dd>\r\n    </dl>\r\n</div>\r\n<div>\r\n    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "eb8e06f3c951d1ded47a332910c10e5542e0ba847193", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "eb8e06f3c951d1ded47a332910c10e5542e0ba847732", async() => {
                 WriteLiteral("\r\n        <button class=\"btn btn-dark\">Back to List</button>\r\n    ");
             }
             );

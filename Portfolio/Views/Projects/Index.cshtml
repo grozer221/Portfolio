@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProjectModel>
+﻿@model IndexViewModel
 
 @{
     ViewData["Title"] = "Projects";
@@ -7,51 +7,32 @@
 <h1>Projects</h1>
 
 <table class="table">
-    <thead>
+    @foreach (var project in Model.Projects)
+    {
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SiteLink)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DesktopAppLink)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AndroidAppLink)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IOSAppLink)
-            </th>
-            <th></th>
+            <td>
+                @Html.DisplayFor(modelItem => project.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => project.SiteLink)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => project.DesktopAppLink)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => project.AndroidAppLink)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => project.IOSAppLink)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@project.Id">
+                    <button class="btn btn-outline-dark">Details</button>
+                </a>
+            </td>
         </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SiteLink)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DesktopAppLink)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AndroidAppLink)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IOSAppLink)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">
-                        <button class="btn btn-outline-dark">Details</button>
-                    </a>
-                </td>
-            </tr>
-        }
-    </tbody>
+    }
 </table>
+
+<partial name="_Pagination" model="Model.Page"/>
+

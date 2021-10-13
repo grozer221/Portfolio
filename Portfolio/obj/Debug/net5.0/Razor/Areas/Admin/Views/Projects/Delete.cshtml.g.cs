@@ -13,34 +13,55 @@ namespace AspNetCore
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
 #nullable restore
 #line 1 "D:\Projects\Portfolio\Portfolio\Areas\Admin\Views\_ViewImports.cshtml"
-using Portfolio.Areas.Admin;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 2 "D:\Projects\Portfolio\Portfolio\Areas\Admin\Views\_ViewImports.cshtml"
-using Portfolio.Models;
+using Portfolio;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 3 "D:\Projects\Portfolio\Portfolio\Areas\Admin\Views\_ViewImports.cshtml"
-using Portfolio.ViewModels;
+using Portfolio.Models.Account;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 4 "D:\Projects\Portfolio\Portfolio\Areas\Admin\Views\_ViewImports.cshtml"
+using Portfolio.Models.Projects;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 6 "D:\Projects\Portfolio\Portfolio\Areas\Admin\Views\_ViewImports.cshtml"
+using Portfolio.ViewModels.Account;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 7 "D:\Projects\Portfolio\Portfolio\Areas\Admin\Views\_ViewImports.cshtml"
+using Portfolio.ViewModels.Projects;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 8 "D:\Projects\Portfolio\Portfolio\Areas\Admin\Views\_ViewImports.cshtml"
+using Portfolio.ViewModels.Common;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 10 "D:\Projects\Portfolio\Portfolio\Areas\Admin\Views\_ViewImports.cshtml"
 using System;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"761040b1572b1cd584a23e55794ed044894dd54b", @"/Areas/Admin/Views/Projects/Delete.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"e43f43d6679e80dbe98fca018c889423790c8206", @"/Areas/Admin/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"16c1dc92e8cb7cb89734819e0424ee729a9a8d30", @"/Areas/Admin/Views/_ViewImports.cshtml")]
     public class Areas_Admin_Views_Projects_Delete : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<ProjectModel>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("type", "hidden", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -171,9 +192,9 @@ using System;
 #line hidden
 #nullable disable
             WriteLiteral("\r\n        </dd>\r\n    </dl>\r\n    \r\n    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "761040b1572b1cd584a23e55794ed044894dd54b8546", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "761040b1572b1cd584a23e55794ed044894dd54b9109", async() => {
                 WriteLiteral("\r\n        ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "761040b1572b1cd584a23e55794ed044894dd54b8812", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "761040b1572b1cd584a23e55794ed044894dd54b9375", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.InputTagHelper>();
@@ -196,7 +217,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper.For = ModelExpressionProvid
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n        ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "761040b1572b1cd584a23e55794ed044894dd54b10510", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "761040b1572b1cd584a23e55794ed044894dd54b11073", async() => {
                     WriteLiteral("\r\n            <button class=\"btn btn-danger\">Delete</button>\r\n        ");
                 }
                 );
@@ -212,7 +233,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper.For = ModelExpressionProvid
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n        ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "761040b1572b1cd584a23e55794ed044894dd54b11808", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "761040b1572b1cd584a23e55794ed044894dd54b12371", async() => {
                     WriteLiteral("\r\n            <button class=\"btn btn-dark\">Back to List</button>\r\n        ");
                 }
                 );

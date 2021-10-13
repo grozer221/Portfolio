@@ -1,21 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Portfolio.Models;
-using Portfolio.ViewModels;
-using Microsoft.EntityFrameworkCore;
+using Portfolio.ViewModels.Account;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Portfolio.Models.Account;
+using Portfolio.Repositories;
 
 namespace Portfolio.Controllers
 {
     public class AccountController : Controller
     {
         private readonly AppDatabaseContext _ctx;
+        private readonly UsersRepository _usersRep;
+        private readonly RolesRepository _rolesRep;
         public AccountController(AppDatabaseContext ctx)
         {
             _ctx = ctx;
+            _usersRep = new UsersRepository(_ctx);
+            _rolesRep = new RolesRepository(_ctx);
         }
 
         [HttpGet]
@@ -26,11 +30,11 @@ namespace Portfolio.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                UserModel user = await _ctx.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
+                UserModel user = await _usersRep.GetUserWithRole(model.Login, model.Password);
                 if (user != null)
                 {
                     await Authenticate(user.Login, user.Role.RoleName);
@@ -49,17 +53,16 @@ namespace Portfolio.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterModel model)
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                UserModel user = await _ctx.Users.FirstOrDefaultAsync(u => u.Login == model.Login);
+                UserModel user = await _usersRep.GetUserByLogin(model.Login);
                 if (user == null)
                 {
-                    var userRole = await _ctx.Roles.FirstOrDefaultAsync(r => r.RoleName == "user");
+                    RoleModel userRole = await _rolesRep.GetRoleByName("admin");
                     user = new UserModel { Login = model.Login, Password = model.Password, Role = userRole };
-                    _ctx.Users.Add(user);
-                    await _ctx.SaveChangesAsync();
+                    await _usersRep.AddUser(user);
                     await Authenticate(user.Login, user.Role.RoleName);
                     return RedirectToAction("Index", "Home");
                 }

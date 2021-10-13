@@ -1,9 +1,11 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Portfolio.Models;
+using Portfolio.Models.Projects;
+using Portfolio.Repositories;
+using Portfolio.ViewModels.Common;
+using Portfolio.ViewModels.Projects;
 
 namespace Portfolio.Areas.Admin.Controllers
 {
@@ -12,23 +14,35 @@ namespace Portfolio.Areas.Admin.Controllers
     public class ProjectsController : Controller
     {
         private readonly AppDatabaseContext _ctx;
+        private readonly ProjectsRepository _projectsRep;
 
         public ProjectsController(AppDatabaseContext context)
         {
             _ctx = context;
+            _projectsRep = new ProjectsRepository(_ctx);
         }
 
         // GET: Admin/Projects
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
-            return View(await _ctx.Projects.ToListAsync());
+            int pageSize = 6;
+
+            int count = await _projectsRep.GetCount();
+            var items = await _projectsRep.GetProjects(page, pageSize);
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            IndexViewModel viewModel = new IndexViewModel
+            {
+                Page = pageViewModel,
+                Projects = items
+            };
+            return View(viewModel);
         }
 
         // GET: Admin/Projects/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var projectModel = await _ctx.Projects
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var projectModel = await _projectsRep.GetProjectById(id);
             if (projectModel == null)
             {
                 return NotFound();
@@ -44,17 +58,13 @@ namespace Portfolio.Areas.Admin.Controllers
         }
 
         // POST: Admin/Projects/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProjectModel projectModel)
         {
             if (ModelState.IsValid)
             {
-                var user = await _ctx.Users.Include(u => u.Projects).FirstOrDefaultAsync(u => u.Login == User.Identity.Name);
-                user.Projects.Add(projectModel);
-                await _ctx.SaveChangesAsync();
+                await _projectsRep.AddProject(User.Identity.Name, projectModel);
                 TempData["Success"] = "The project has been created";
                 return RedirectToAction(nameof(Index));
             }
@@ -64,7 +74,7 @@ namespace Portfolio.Areas.Admin.Controllers
         // GET: Admin/Projects/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var projectModel = await _ctx.Projects.FindAsync(id);
+            var projectModel = await _projectsRep.GetProjectById(id);
             if (projectModel == null)
             {
                 return NotFound();
@@ -73,8 +83,6 @@ namespace Portfolio.Areas.Admin.Controllers
         }
 
         // POST: Admin/Projects/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, ProjectModel projectModel)
@@ -88,12 +96,11 @@ namespace Portfolio.Areas.Admin.Controllers
             {
                 try
                 {
-                    _ctx.Update(projectModel);
-                    await _ctx.SaveChangesAsync();
+                    await _projectsRep.UpdateProject(projectModel);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProjectModelExists(projectModel.Id))
+                    if (!await _projectsRep.ProjectModelExists(projectModel.Id))
                         return NotFound();
                     else
                         throw;
@@ -106,8 +113,7 @@ namespace Portfolio.Areas.Admin.Controllers
         // GET: Admin/Projects/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var projectModel = await _ctx.Projects
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var projectModel = await _projectsRep.GetProjectById(id);
             if (projectModel == null)
             {
                 return NotFound();
@@ -121,16 +127,9 @@ namespace Portfolio.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var projectModel = await _ctx.Projects.FindAsync(id);
-            _ctx.Projects.Remove(projectModel);
-            await _ctx.SaveChangesAsync();
+            await _projectsRep.DeleteProject(id);
             TempData["Success"] = "The project has been deleted";
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool ProjectModelExists(int id)
-        {
-            return _ctx.Projects.Any(e => e.Id == id);
         }
     }
 }

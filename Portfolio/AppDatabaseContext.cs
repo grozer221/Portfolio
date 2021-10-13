@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Portfolio.Models;
+using Portfolio.Models.Account;
+using Portfolio.Models.Projects;
 
 namespace Portfolio
 {

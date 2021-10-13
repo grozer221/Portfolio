@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Portfolio.Models.Projects;
+using System.Collections.Generic;
 
-namespace Portfolio.Models
+namespace Portfolio.Models.Account
 {
     public class UserModel
     {

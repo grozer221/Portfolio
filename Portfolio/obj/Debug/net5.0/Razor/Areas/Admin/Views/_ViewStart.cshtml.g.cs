@@ -13,34 +13,55 @@ namespace AspNetCore
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
 #nullable restore
 #line 1 "D:\Projects\Portfolio\Portfolio\Areas\Admin\Views\_ViewImports.cshtml"
-using Portfolio.Areas.Admin;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 2 "D:\Projects\Portfolio\Portfolio\Areas\Admin\Views\_ViewImports.cshtml"
-using Portfolio.Models;
+using Portfolio;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 3 "D:\Projects\Portfolio\Portfolio\Areas\Admin\Views\_ViewImports.cshtml"
-using Portfolio.ViewModels;
+using Portfolio.Models.Account;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 4 "D:\Projects\Portfolio\Portfolio\Areas\Admin\Views\_ViewImports.cshtml"
+using Portfolio.Models.Projects;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 6 "D:\Projects\Portfolio\Portfolio\Areas\Admin\Views\_ViewImports.cshtml"
+using Portfolio.ViewModels.Account;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 7 "D:\Projects\Portfolio\Portfolio\Areas\Admin\Views\_ViewImports.cshtml"
+using Portfolio.ViewModels.Projects;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 8 "D:\Projects\Portfolio\Portfolio\Areas\Admin\Views\_ViewImports.cshtml"
+using Portfolio.ViewModels.Common;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 10 "D:\Projects\Portfolio\Portfolio\Areas\Admin\Views\_ViewImports.cshtml"
 using System;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7091c65830b0329e613be026ede8a57552863778", @"/Areas/Admin/Views/_ViewStart.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"e43f43d6679e80dbe98fca018c889423790c8206", @"/Areas/Admin/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"16c1dc92e8cb7cb89734819e0424ee729a9a8d30", @"/Areas/Admin/Views/_ViewImports.cshtml")]
     public class Areas_Admin_Views__ViewStart : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998

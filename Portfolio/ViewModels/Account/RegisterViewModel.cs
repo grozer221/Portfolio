@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Portfolio.ViewModels
+namespace Portfolio.ViewModels.Account
 {
-    public class RegisterModel
+    public class RegisterViewModel
     {
         [Required(ErrorMessage = "Now wrote login")]
         public string Login { get; set; }

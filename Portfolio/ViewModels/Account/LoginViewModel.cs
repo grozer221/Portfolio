@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Portfolio.ViewModels
+namespace Portfolio.ViewModels.Account
 {
-    public class LoginModel
+    public class LoginViewModel
     {
         [Required(ErrorMessage = "Not wrote login")]
         public string Login { get; set; }
