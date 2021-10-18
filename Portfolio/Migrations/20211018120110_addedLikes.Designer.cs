@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portfolio;
 
 namespace Portfolio.Migrations
 {
     [DbContext(typeof(AppDatabaseContext))]
-    partial class AppDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20211018120110_addedLikes")]
+    partial class addedLikes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,6 +31,9 @@ namespace Portfolio.Migrations
                     b.Property<DateTime>("DateCreate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsLike")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("ProjectId")
                         .HasColumnType("int");
 
@@ -41,7 +46,7 @@ namespace Portfolio.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Likes");
+                    b.ToTable("LikeModel");
                 });
 
             modelBuilder.Entity("Portfolio.Models.ProjectModel", b =>

@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Portfolio.Models;
 using Portfolio.Repositories;
 using Portfolio.ViewModels;
 
@@ -9,11 +11,13 @@ namespace Portfolio.Controllers
     {
         private readonly AppDatabaseContext _ctx;
         private readonly ProjectsRepository _projectsRep;
+        private readonly LikesRepository _likesRep;
 
         public ProjectsController(AppDatabaseContext context)
         {
             _ctx = context;
             _projectsRep = new ProjectsRepository(_ctx);
+            _likesRep = new LikesRepository(_ctx);
         }
 
         // GET: Admin/Projects
@@ -36,12 +40,37 @@ namespace Portfolio.Controllers
         // GET: Admin/Projects/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var projectModel = await _projectsRep.GetProjectById(id);
-            if (projectModel == null)
-            {
+            ProjectModel project = await _projectsRep.GetProjectById(id);
+            if (project == null)
                 return NotFound();
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewBag.IsLiked = await _likesRep.IsLikedProjectByUser(id, User.Identity.Name);
+                ViewBag.LikesCount = await _likesRep.GetLikesCount(id);
             }
-            return View(projectModel);
+            return View(project);
+        }
+
+        // POST: Admin/Projects/Like/5
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Like(int id)
+        {
+            if (await _likesRep.LikeProject(id, User.Identity.Name))
+                return Ok();
+            else
+                return BadRequest();
+        }
+
+        // POST: Admin/Projects/UnLike/5
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> UnLike(int id)
+        {
+            if (await _likesRep.UnLikeProject(id, User.Identity.Name))
+                return Ok();
+            else
+                return BadRequest();
         }
     }
 }

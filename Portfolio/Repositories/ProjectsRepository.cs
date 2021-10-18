@@ -40,6 +40,11 @@ namespace Portfolio.Repositories
         {
             return await _ctx.Projects.Include(p => p.Technologies).FirstOrDefaultAsync(p => p.Id == id);
         }
+        
+        public async Task<ProjectModel> GetProjectIncludedTechnologiesLikesByIdAsync(int id)
+        {
+            return await _ctx.Projects.Include(p => p.Technologies).Include(p => p.Likes).FirstOrDefaultAsync(p => p.Id == id);
+        }
 
         public async Task AddProject(string userLogin, ProjectModel project)
         {

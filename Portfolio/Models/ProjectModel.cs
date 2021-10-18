@@ -23,5 +23,6 @@ namespace Portfolio.Models
         public virtual List<TechnologyModel> Technologies { get; set; }
         [NotMapped]
         public int[] TechnologiesIds { get; set; }
+        public virtual List<LikeModel> Likes { get; set; }
     }
 }

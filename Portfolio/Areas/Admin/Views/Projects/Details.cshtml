@@ -1,7 +1,7 @@
 ﻿@model ProjectModel
 
 @{
-        ViewData["Title"] = $"Details {Model.Name}(AdminPanel)";
+    ViewData["Title"] = $"Details {Model.Name}(AdminPanel)";
 }
 
 <h1>Details  @Model.Name</h1>
@@ -46,11 +46,37 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">
-        <button class="btn btn-outline-dark">Edit</button>
-    </a>
-    <a asp-action="Index">
-        <button class="btn btn-dark">Back to List</button>
-    </a>
+<div class="d-flex flex-column align-items-center">
+    <button type="button" id="like" data-id=@Model.Id class="@(ViewBag.IsLiked ? "liked" : null)">
+        <img src="~/images/like.svg" alt="Like" class="like" />
+    </button>
+    <span id="likesCount">@ViewBag.LikesCount</span>
 </div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-dark">Edit</a>
+    <a asp-action="Index" class="btn btn-dark">Back to List</a>
+</div>
+
+@section Scripts{
+    <script>
+        $("#like").click(function (e) {
+            e.preventDefault();
+            let id = $(this).data("id");
+            if ($(this).hasClass("liked")) {
+                $.post("/admin/projects/unlike?id=" + id, {}, function (data) {
+                    console.log("unlike");
+                    $("#like").removeClass("liked");
+                    $("#likesCount").text(parseInt($("#likesCount").text()) - 1)
+                });
+            }
+            else {
+                $.post("/admin/projects/like?id=" + id, {}, function (data) {
+                    console.log("like");
+                    $("#like").addClass("liked");
+                    $("#likesCount").text(parseInt($("#likesCount").text()) + 1)
+                });
+            }
+
+        })
+    </script>
+}
