@@ -46,7 +46,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"4916b782263a4d59b34eb764f5aa42ac28d3deda", @"/Areas/Admin/Views/Technologies/Create.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"6d80657f4edbbfab345e3ccef5397de63fe56600", @"/Areas/Admin/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d751bc3100990b00143b5f3797be725f5207d7f7", @"/Areas/Admin/Views/_ViewImports.cshtml")]
     public class Areas_Admin_Views_Technologies_Create : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<TechnologyModel>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("class", new global::Microsoft.AspNetCore.Html.HtmlString("text-danger"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);

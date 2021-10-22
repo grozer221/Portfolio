@@ -46,7 +46,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"b1e9f60ce6d6b5d67df617c815713e94e9198c3b", @"/Areas/Admin/Views/Home/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"6d80657f4edbbfab345e3ccef5397de63fe56600", @"/Areas/Admin/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d751bc3100990b00143b5f3797be725f5207d7f7", @"/Areas/Admin/Views/_ViewImports.cshtml")]
     public class Areas_Admin_Views_Home_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998

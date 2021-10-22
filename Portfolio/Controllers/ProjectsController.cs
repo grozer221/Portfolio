@@ -44,10 +44,8 @@ namespace Portfolio.Controllers
             if (project == null)
                 return NotFound();
             if (User.Identity.IsAuthenticated)
-            {
                 ViewBag.IsLiked = await _likesRep.IsLikedProjectByUser(id, User.Identity.Name);
-                ViewBag.LikesCount = await _likesRep.GetLikesCount(id);
-            }
+            ViewBag.LikesCount = await _likesRep.GetLikesCount(id);
             return View(project);
         }
 

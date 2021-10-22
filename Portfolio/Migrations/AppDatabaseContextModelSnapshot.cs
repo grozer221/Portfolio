@@ -66,6 +66,9 @@ namespace Portfolio.Migrations
                     b.Property<string>("IOSAppLink")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageURL")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

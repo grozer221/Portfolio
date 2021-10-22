@@ -49,7 +49,8 @@ namespace Portfolio.Repositories
         public async Task AddProject(string userLogin, ProjectModel project)
         {
             UserModel user = await _ctx.Users.Include(u => u.Projects).ThenInclude(p => p.Technologies).FirstOrDefaultAsync(u => u.Login == userLogin);
-            project.Technologies = await _technologiesRep.GetTechnologiesByIds(project.TechnologiesIds);
+            if(project.TechnologiesIds != null)
+                project.Technologies = await _technologiesRep.GetTechnologiesByIds(project.TechnologiesIds);
             user.Projects.Add(project);
             await _ctx.SaveChangesAsync();
         }
@@ -60,6 +61,7 @@ namespace Portfolio.Repositories
             if (currentProject.Technologies != null)
                 currentProject.Technologies.Clear();
             currentProject.Name = project.Name;
+            currentProject.ImageURL = project.ImageURL;
             currentProject.SiteLink = project.SiteLink;
             currentProject.DesktopAppLink = project.DesktopAppLink;
             currentProject.AndroidAppLink = project.AndroidAppLink;

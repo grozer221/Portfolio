@@ -40,15 +40,20 @@
         </dd>
     </dl>
 </div>
-@if (User.Identity.IsAuthenticated)
-{
-    <div class="d-flex flex-column align-items-center">
+
+<div class="d-flex flex-column align-items-center">
+    @if (User.Identity.IsAuthenticated)
+    {
         <button type="button" id="like" data-id=@Model.Id class="@(ViewBag.IsLiked ? "liked" : null)">
             <img src="~/images/like.svg" alt="Like" class="like" />
         </button>
-        <span id="likesCount">@ViewBag.LikesCount</span>
-    </div>
-}
+    }
+    else
+    {
+        <img src="~/images/like.svg" alt="Like" class="like" />
+    }
+    <span id="likesCount">@ViewBag.LikesCount</span>
+</div>
 <div>
     <a asp-action="Index" class="btn btn-dark">Back to List</a>
 </div>

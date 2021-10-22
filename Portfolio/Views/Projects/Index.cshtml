@@ -9,30 +9,30 @@
 <table class="table">
     @foreach (var project in Model.Projects)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => project.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => project.SiteLink)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => project.DesktopAppLink)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => project.AndroidAppLink)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => project.IOSAppLink)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@project.Id">
-                    <button class="btn btn-outline-dark">Details</button>
-                </a>
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => project.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => project.SiteLink)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => project.DesktopAppLink)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => project.AndroidAppLink)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => project.IOSAppLink)
+        </td>
+        <td>
+            <a asp-action="Details" asp-route-id="@project.Id" class="btn btn-outline-dark">Details</a>
+        </td>
+    </tr>
     }
 </table>
 
-<partial name="_Pagination" model="Model.Page"/>
+<div class="d-flex w-100 justify-content-center">
+    <pagination page-count="@Model.Page.TotalPages" page-target="/projects" page-number="@Model.Page.PageNumber" page-range="10"></pagination>
+</div>
 

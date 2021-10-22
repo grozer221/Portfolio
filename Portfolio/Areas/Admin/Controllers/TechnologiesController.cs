@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Portfolio.Models;
@@ -9,6 +10,7 @@ using Portfolio.ViewModels;
 namespace Portfolio.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "admin")]
     public class TechnologiesController : Controller
     {
         private readonly AppDatabaseContext _ctx;

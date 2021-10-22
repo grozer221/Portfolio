@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,13 +22,15 @@ namespace Portfolio.Areas.Admin.Controllers
         private readonly ProjectsRepository _projectsRep;
         private readonly TechnologiesRepository _technologiesRep;
         private readonly LikesRepository _likesRep;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProjectsController(AppDatabaseContext context)
+        public ProjectsController(AppDatabaseContext context, IWebHostEnvironment webHostEnvironment)
         {
             _ctx = context;
             _projectsRep = new ProjectsRepository(_ctx);
             _technologiesRep = new TechnologiesRepository(_ctx);
             _likesRep = new LikesRepository(_ctx);
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Admin/Projects
@@ -53,6 +58,7 @@ namespace Portfolio.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            projectModel.ImageURL = Path.Combine("/media/projects", projectModel.ImageURL);
             ViewBag.IsLiked = await _likesRep.IsLikedProjectByUser(id, User.Identity.Name);
             ViewBag.LikesCount = await _likesRep.GetLikesCount(id);
             return View(projectModel);
@@ -73,6 +79,16 @@ namespace Portfolio.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                string imageName = "noimage.jpeg";
+                if (projectModel.ImageUpload != null)
+                {
+                    string uploadDir = Path.Combine(_webHostEnvironment.WebRootPath, "media\\projects");
+                    imageName = Guid.NewGuid().ToString() + "_" + projectModel.ImageUpload.FileName;
+                    string filePath = Path.Combine(uploadDir, imageName);
+                    using (FileStream fs = new FileStream(filePath, FileMode.Create))
+                        await projectModel.ImageUpload.CopyToAsync(fs);
+                }
+                projectModel.ImageURL = imageName;
                 await _projectsRep.AddProject(User.Identity.Name, projectModel);
                 TempData["Success"] = "The project has been created";
                 return RedirectToAction(nameof(Index));
@@ -115,6 +131,15 @@ namespace Portfolio.Areas.Admin.Controllers
             {
                 try
                 {
+                    if (projectModel.ImageUpload != null)
+                    {
+                        string uploadDir = Path.Combine(_webHostEnvironment.WebRootPath, "media\\projects");
+                        string imageName = Guid.NewGuid().ToString() + "_" + projectModel.ImageUpload.FileName;
+                        string filePath = Path.Combine(uploadDir, imageName);
+                        using (FileStream fs = new FileStream(filePath, FileMode.Create))
+                            await projectModel.ImageUpload.CopyToAsync(fs);
+                        projectModel.ImageURL = imageName;
+                    }
                     await _projectsRep.UpdateProject(projectModel);
                 }
                 catch (DbUpdateConcurrencyException)
