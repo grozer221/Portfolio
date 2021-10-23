@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portfolio;
 
 namespace Portfolio.Migrations
 {
     [DbContext(typeof(AppDatabaseContext))]
-    partial class AppDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20211022125324_addedComments1")]
+    partial class addedComments1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,9 +33,6 @@ namespace Portfolio.Migrations
 
                     b.Property<int?>("ProjectId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
@@ -194,7 +193,7 @@ namespace Portfolio.Migrations
             modelBuilder.Entity("Portfolio.Models.CommentModel", b =>
                 {
                     b.HasOne("Portfolio.Models.ProjectModel", "Project")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("ProjectId");
 
                     b.HasOne("Portfolio.Models.UserModel", "User")
@@ -265,8 +264,6 @@ namespace Portfolio.Migrations
 
             modelBuilder.Entity("Portfolio.Models.ProjectModel", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("Likes");
                 });
 

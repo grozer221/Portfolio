@@ -22,6 +22,7 @@ namespace Portfolio.Areas.Admin.Controllers
         private readonly ProjectsRepository _projectsRep;
         private readonly TechnologiesRepository _technologiesRep;
         private readonly LikesRepository _likesRep;
+        private readonly CommentsRepository _commentsRep;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public ProjectsController(AppDatabaseContext context, IWebHostEnvironment webHostEnvironment)
@@ -30,6 +31,7 @@ namespace Portfolio.Areas.Admin.Controllers
             _projectsRep = new ProjectsRepository(_ctx);
             _technologiesRep = new TechnologiesRepository(_ctx);
             _likesRep = new LikesRepository(_ctx);
+            _commentsRep = new CommentsRepository(_ctx);
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -53,7 +55,7 @@ namespace Portfolio.Areas.Admin.Controllers
         // GET: Admin/Projects/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            ProjectModel projectModel = await _projectsRep.GetProjectIncludedTechnologiesLikesByIdAsync(id);
+            ProjectModel projectModel = await _projectsRep.GetProjectIncludedTechnologiesLikesCommentsByIdAsync(id);
             if (projectModel == null)
             {
                 return NotFound();
@@ -194,6 +196,14 @@ namespace Portfolio.Areas.Admin.Controllers
                 return Ok();
             else
                 return BadRequest();
+        }
+
+        // POST: Admin/Projects/AddComment/text/id
+        [HttpPost]
+        public async Task<ActionResult> AddComment(string text, int id)
+        {
+            await _commentsRep.AddComment(text, id, User.Identity.Name);
+            return RedirectToAction(nameof(Details), new { id });
         }
     }
 }

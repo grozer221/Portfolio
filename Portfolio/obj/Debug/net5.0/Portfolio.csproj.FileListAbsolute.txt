@@ -442,7 +442,6 @@ D:\Projects\Portfolio\Portfolio\obj\Debug\net5.0\Razor\Views\Projects\Index.csht
 D:\Projects\Portfolio\Portfolio\obj\Debug\net5.0\Razor\Views\Projects\Details.cshtml.g.cs
 D:\Projects\Portfolio\Portfolio\obj\Debug\net5.0\Razor\Areas\Admin\Views\Shared\_NotificationPartial.cshtml.g.cs
 D:\Projects\Portfolio\Portfolio\bin\Debug\net5.0\libman.json
-D:\Projects\Portfolio\Portfolio\obj\Debug\net5.0\Razor\Views\Shared\_Pagination.cshtml.g.cs
 D:\Projects\Portfolio\Portfolio\obj\Debug\net5.0\Razor\Areas\Admin\Views\Technologies\Create.cshtml.g.cs
 D:\Projects\Portfolio\Portfolio\obj\Debug\net5.0\Razor\Areas\Admin\Views\Technologies\Delete.cshtml.g.cs
 D:\Projects\Portfolio\Portfolio\obj\Debug\net5.0\Razor\Areas\Admin\Views\Technologies\Details.cshtml.g.cs

@@ -15,5 +15,6 @@ namespace Portfolio
         public DbSet<RoleModel> Roles { get; set; }
         public DbSet<TechnologyModel> Technologies { get; set; }
         public DbSet<LikeModel> Likes { get; set; }
+        public DbSet<CommentModel> Comments{ get; set; }
     }
 }

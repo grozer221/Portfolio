@@ -46,6 +46,16 @@ namespace Portfolio.Repositories
             return await _ctx.Projects.Include(p => p.Technologies).Include(p => p.Likes).FirstOrDefaultAsync(p => p.Id == id);
         }
 
+        public async Task<ProjectModel> GetProjectIncludedTechnologiesLikesCommentsByIdAsync(int id)
+        {
+            return await _ctx.Projects.Include(p => p.Technologies).Include(p => p.Likes).Include(p => p.Comments).FirstOrDefaultAsync(p => p.Id == id);
+        }
+        
+        public async Task<ProjectModel> GetProjectIncludedUsersCommentsByIdAsync(int id)
+        {
+            return await _ctx.Projects.Include(p => p.CreatedByUser).Include(p => p.Comments).FirstOrDefaultAsync(p => p.Id == id);
+        }
+
         public async Task AddProject(string userLogin, ProjectModel project)
         {
             UserModel user = await _ctx.Users.Include(u => u.Projects).ThenInclude(p => p.Technologies).FirstOrDefaultAsync(u => u.Login == userLogin);

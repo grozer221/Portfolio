@@ -39,6 +39,7 @@ namespace Portfolio.Models
         public int[] TechnologiesIds { get; set; }
 
         public virtual List<LikeModel> Likes { get; set; }
+        public virtual List<CommentModel> Comments { get; set; }
 
         [NotMapped]
         [FileExtension]
