@@ -22,9 +22,14 @@ namespace Portfolio.Repositories
             return await _ctx.Users.FirstOrDefaultAsync(u => u.Login == login);
         }
         
-        public async Task<UserModel> GetUserWithRole(string login, string password)
+        public async Task<UserModel> GetUserWithRoleByLogin(string login, string password)
         {
             return await _ctx.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Login == login && u.Password == password);
+        }
+        
+        public async Task<UserModel> GetUserWithRoleByLogin(string login)
+        {
+            return await _ctx.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Login == login);
         }
         
         public async Task AddUser(UserModel user)

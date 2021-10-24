@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "FEXWA+2iI5vUQ8c1wvPN5v3IBy3gBJ9BtGO5uS7IehKVOFJv7QwdL2uVbHb5mhbJLdbbYXd/4eZYNCRNLE9mpA==",
+  "dgSpecHash": "I6LFOZmL3qn14KrCjcgaVKBDcAnskVvp61TFvfnG9EUgWuFsr1dhI9rfwGg5OyrntHD2AplGtXpwzTMkQZrbgA==",
   "success": true,
   "projectFilePath": "D:\\Projects\\Portfolio\\Portfolio\\Portfolio.csproj",
   "expectedPackageFiles": [
@@ -11,6 +11,7 @@
     "C:\\Users\\ki201\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
     "C:\\Users\\ki201\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\5.0.10\\microsoft.aspnetcore.razor.language.5.0.10.nupkg.sha512",
     "C:\\Users\\ki201\\.nuget\\packages\\microsoft.aspnetcore.razor.runtime\\2.2.0\\microsoft.aspnetcore.razor.runtime.2.2.0.nupkg.sha512",
+    "C:\\Users\\ki201\\.nuget\\packages\\microsoft.aspnetcore.spaservices.extensions\\5.0.11\\microsoft.aspnetcore.spaservices.extensions.5.0.11.nupkg.sha512",
     "C:\\Users\\ki201\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\ki201\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.0.0\\microsoft.codeanalysis.analyzers.3.0.0.nupkg.sha512",
     "C:\\Users\\ki201\\.nuget\\packages\\microsoft.codeanalysis.common\\3.8.0\\microsoft.codeanalysis.common.3.8.0.nupkg.sha512",
@@ -34,6 +35,9 @@
     "C:\\Users\\ki201\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\5.0.2\\microsoft.extensions.dependencyinjection.5.0.2.nupkg.sha512",
     "C:\\Users\\ki201\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\ki201\\.nuget\\packages\\microsoft.extensions.dependencymodel\\5.0.0\\microsoft.extensions.dependencymodel.5.0.0.nupkg.sha512",
+    "C:\\Users\\ki201\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\5.0.0\\microsoft.extensions.fileproviders.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\ki201\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\5.0.0\\microsoft.extensions.fileproviders.physical.5.0.0.nupkg.sha512",
+    "C:\\Users\\ki201\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\5.0.0\\microsoft.extensions.filesystemglobbing.5.0.0.nupkg.sha512",
     "C:\\Users\\ki201\\.nuget\\packages\\microsoft.extensions.logging\\5.0.0\\microsoft.extensions.logging.5.0.0.nupkg.sha512",
     "C:\\Users\\ki201\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\5.0.0\\microsoft.extensions.logging.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\ki201\\.nuget\\packages\\microsoft.extensions.options\\5.0.0\\microsoft.extensions.options.5.0.0.nupkg.sha512",

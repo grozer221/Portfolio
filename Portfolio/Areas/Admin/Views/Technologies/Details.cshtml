@@ -1,7 +1,7 @@
 ﻿@model TechnologyModel
 
 @{
-    ViewData["Title"] = "Details " + Model.Name;
+    ViewData["Title"] = $"Details {Model.Name} (AdminPanel)";
 }
 
 <h1>Details @Model.Name</h1>
@@ -12,19 +12,25 @@
             @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Model.Name
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Color)
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Color
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.DateCreate)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateCreate)
+            @Model.DateCreate
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.DateLastChange)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateLastChange)
+            @Model.DateLastChange
         </dd>
     </dl>
 </div>

@@ -1,13 +1,13 @@
 ﻿@model ProjectsIndexViewModel
 
 @{
-    ViewData["Title"] = "Projects(AdminPanel)";
+    ViewData["Title"] = "Projects (AdminPanel)";
 }
 
 <h1>Projects</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-dark">Create New</a>
+    <a asp-action="Create" class="btn btn-outline-dark">Create New</a>
 </p>
 <table class="table">
     <tr>
@@ -24,26 +24,55 @@
                 @Html.DisplayFor(modelItem => project.Name)
             </td>
             <td>
-                <div class="wrapperImagePreview ">
-                    <img src="@("/media/projects/" + project.ImageURL)" alt="ProjectImage" class="imagePreview" />
+                <div class="wrapperImagePreview">
+                    <img src="@("/media/projects/" + project.ImageURL)" alt="ProjectImage" class="imagePreview rounded" />
                 </div>
             </td>
             <td>
                 <div>
-                    <span>@Html.DisplayNameFor(modelItem => modelItem.Projects[0].SiteLink): </span>
-                    <span>@Html.DisplayFor(modelItem => project.SiteLink)</span>
+                    <span>@Html.DisplayNameFor(modelItem => project.SiteLink): </span>
+                    @if (project.SiteLink == null)
+                    {
+                        <span>&mdash;</span>
+                    }
+                    else
+                    {
+                        <a href="@project.SiteLink">@project.SiteLink</a>
+                    }
+
                 </div>
                 <div>
-                    <span>@Html.DisplayNameFor(modelItem => modelItem.Projects[0].DesktopAppLink): </span>
-                    <span>@Html.DisplayFor(modelItem => project.DesktopAppLink)</span>
+                    <span>@Html.DisplayNameFor(modelItem => project.DesktopAppLink): </span>
+                    @if (project.DesktopAppLink == null)
+                    {
+                        <span>&mdash;</span>
+                    }
+                    else
+                    {
+                        <a href="@project.DesktopAppLink">@project.DesktopAppLink</a>
+                    }
                 </div>
                 <div>
-                    <span>@Html.DisplayNameFor(modelItem => modelItem.Projects[0].AndroidAppLink): </span>
-                    <span>@Html.DisplayFor(modelItem => project.AndroidAppLink)</span>
+                    <span>@Html.DisplayNameFor(modelItem => project.AndroidAppLink): </span>
+                    @if (project.AndroidAppLink == null)
+                    {
+                        <span>&mdash;</span>
+                    }
+                    else
+                    {
+                        <a href="@project.AndroidAppLink">@project.AndroidAppLink</a>
+                    }
                 </div>
                 <div>
-                    <span>@Html.DisplayNameFor(modelItem => modelItem.Projects[0].IOSAppLink): </span>
-                    <span>@Html.DisplayFor(modelItem => project.IOSAppLink)</span>
+                    <span>@Html.DisplayNameFor(modelItem => project.IOSAppLink): </span>
+                    @if (project.IOSAppLink == null)
+                    {
+                        <span>&mdash;</span>
+                    }
+                    else
+                    {
+                        <a href="@project.IOSAppLink">@project.IOSAppLink</a>
+                    }
                 </div>
             </td>
             <td>
@@ -53,22 +82,19 @@
 
                         @foreach (var technology in project.Technologies)
                         {
-                            <li>@technology.Name</li>
+                        <li class="d-flex align-items-center">
+                            <color-preview color="@technology.Color"></color-preview>
+                            <div class="ml-1">@technology.Name</div>
+                        </li>
                         }
                     </ul>
                 }
 
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@project.Id">
-                    <button class="btn btn-dark">Edit</button>
-                </a>
-                <a asp-action="Details" asp-route-id="@project.Id">
-                    <button class="btn btn-outline-dark">Details</button>
-                </a>
-                <a asp-action="Delete" asp-route-id="@project.Id">
-                    <button class="btn btn-danger">Delete</button>
-                </a>
+                <a asp-action="Edit" asp-route-id="@project.Id" class="btn btn-dark">Edit</a>
+                <a asp-action="Details" asp-route-id="@project.Id" class="btn btn-outline-dark">Details</a>
+                <a asp-action="Delete" asp-route-id="@project.Id" class="btn btn-danger">Delete</a>
             </td>
         </tr>
     }

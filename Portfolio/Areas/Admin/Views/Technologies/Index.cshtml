@@ -1,17 +1,18 @@
 ﻿@model TechnologiesIndexViewModel
 
 @{
-    ViewData["Title"] = "Technologies";
+    ViewData["Title"] = "Technologies (AdminPanel)";
 }
 
 <h1>Technologies</h1>
 
 <p>
-    <a class="btn btn-dark" asp-action="Create">Create New</a>
+    <a class="btn btn-outline-dark" asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <tr>
         <th>@Html.DisplayNameFor(modelItem => modelItem.Technologies[0].Name)</th>
+        <th>@Html.DisplayNameFor(modelItem => modelItem.Technologies[0].Color)</th>
         <th>@Html.DisplayNameFor(modelItem => modelItem.Technologies[0].DateCreate)</th>
         <th>@Html.DisplayNameFor(modelItem => modelItem.Technologies[0].DateLastChange)</th>
         <th>Actions</th>
@@ -19,18 +20,16 @@
     @foreach (var technology in Model.Technologies)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => technology.Name)
+            <td>@technology.Name</td>
+            <td class="d-flex align-items-center">
+                <color-preview color="@technology.Color"></color-preview>
+                <div class="ml-1">@technology.Color</div>
             </td>
+            <td>@technology.DateCreate</td>
+            <td>@technology.DateLastChange</td>
             <td>
-                @Html.DisplayFor(modelItem => technology.DateCreate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => technology.DateLastChange)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@technology.Id" class="btn btn-outline-primary">Edit</a>
-                <a asp-action="Details" asp-route-id="@technology.Id" class="btn btn-primary">Details</a>
+                <a asp-action="Edit" asp-route-id="@technology.Id" class="btn btn-dark">Edit</a>
+                <a asp-action="Details" asp-route-id="@technology.Id" class="btn btn-outline-dark">Details</a>
                 <a asp-action="Delete" asp-route-id="@technology.Id" class="btn btn-danger">Delete</a>
             </td>
         </tr>
