@@ -13,14 +13,12 @@ namespace Portfolio.Areas.Admin.Controllers
     [Area("Admin")]
     public class AccountController : Controller
     {
-        private readonly AppDatabaseContext _ctx;
         private readonly UsersRepository _usersRep;
         private readonly RolesRepository _rolesRep;
-        public AccountController(AppDatabaseContext ctx)
+        public AccountController(UsersRepository usersRep, RolesRepository rolesRep)
         {
-            _ctx = ctx;
-            _usersRep = new UsersRepository(_ctx);
-            _rolesRep = new RolesRepository(_ctx);
+            _usersRep = usersRep;
+            _rolesRep = rolesRep;
         }
 
         [HttpGet]

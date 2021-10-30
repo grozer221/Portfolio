@@ -1,10 +1,10 @@
 import {ResponseCodes} from '../api/api';
 import {authAPI} from "../api/auth-api";
 import {BaseThunkType, InferActionsTypes} from "./redux-store";
-import {Profile} from "../types/types";
+import {UserType} from "../types/types";
 
 let initialState = {
-    currentUser: {} as Profile,
+    currentUser: {} as UserType,
     isAuth: false,
     isFetching: false,
 };
@@ -28,7 +28,7 @@ const authReducer = (state = initialState, action: ActionsType): InitialStateTyp
 };
 
 export const actions = {
-    setAuthData: (user: Profile, isAuth: boolean) => ({
+    setAuthData: (user: UserType, isAuth: boolean) => ({
         type: 'SET_AUTH_DATA',
         payload: {currentUser: user, isAuth: isAuth}
     } as const),
@@ -77,7 +77,7 @@ export const register = (login: string, password: string, confirmPassword: strin
 export const logout = (): ThunkType => async (dispatch) => {
     let data = await authAPI.logout();
     if (data.resultCode === ResponseCodes.Success) {
-        dispatch(actions.setAuthData({} as Profile, false));
+        dispatch(actions.setAuthData({} as UserType, false));
     }
 
     dispatch(actions.setIsFetching(false));

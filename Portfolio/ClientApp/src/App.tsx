@@ -27,20 +27,21 @@ export const App: React.FC = () => {
         return <Loading/>
 
     return (
-        <div className='content'>
+        <div className='container'>
             <NavBar/>
-            <Switch>
-                <Route exact path="/" render={() => <Home/>}/>
-                <Route exact path="/projects" render={() => <Projects/>}/>
-                <Route exact path="/login" render={() => <Login/>}/>
-                <Route path="*" render={() => <Result
-                    status="404"
-                    title="404"
-                    subTitle="Sorry, the page you visited does not exist."
-                    extra={<Button type="primary" onClick={() => history.push('/')}>Back Home</Button>}
-                />}/>
-            </Switch>
-
+            <div className='content'>
+                <Switch>
+                    <Route exact path="/" render={() => <Home/>}/>
+                    <Route exact path="/projects" render={() => <Projects/>}/>
+                    <Route exact path="/login" render={() => <Login/>}/>
+                    <Route path="*" render={() => <Result
+                        status="404"
+                        title="404"
+                        subTitle="Sorry, the page you visited does not exist."
+                        extra={<Button type="primary" onClick={() => history.push('/')}>Back Home</Button>}
+                    />}/>
+                </Switch>
+            </div>
         </div>
     );
 }

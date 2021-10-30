@@ -1,5 +1,5 @@
 import {instance, ResponseCodes} from "./api";
-import {Profile} from "../types/types";
+import {UserType} from "../types/types";
 
 export const authAPI = {
     isAuth() {
@@ -23,7 +23,7 @@ export const authAPI = {
 type ResponseType = {
     resultCode: ResponseCodes,
     messages: Array<string>,
-    data: Profile,
+    data: UserType,
 }
 
 type LogoutType = {

@@ -1,3 +1,5 @@
+using GraphQL;
+using GraphQL.Server;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Portfolio.GraphQL;
+using Portfolio.Repositories;
 
 namespace Portfolio
 {
@@ -23,15 +27,31 @@ namespace Portfolio
         {
             services.AddDbContext<AppDatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlServer")));
 
+            services.AddTransient<UsersRepository>();
+            services.AddTransient<RolesRepository>();
+            services.AddTransient<TechnologiesRepository>();
+            services.AddTransient<ProjectsRepository>();
+            services.AddTransient<CommentsRepository>();
+            services.AddTransient<LikesRepository>();
+
+            services.AddTransient<PortfolioSchema>();
+            services
+                .AddGraphQL()
+                .AddGraphTypes(ServiceLifetime.Transient)
+                .AddSystemTextJson()
+                .AddWebSockets()
+                .AddDataLoader()
+                .AddGraphTypes(typeof(PortfolioSchema));
+
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options => //CookieAuthenticationOptions
+                .AddCookie(options =>
                 {
                     options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/admin/account/login");
                 });
 
             services.AddControllersWithViews();
 
-            // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
@@ -56,11 +76,19 @@ namespace Portfolio
 
             app.UseRouting();
 
-            app.UseAuthentication();  
-            app.UseAuthorization();     
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+          //  app.UseWebSockets();
+          //  app.UseGraphQLWebSockets<PortfolioSchema>();
+            //app.UseGraphQL<PortfolioSchema>();
+            //app.UseGraphQLPlayground();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGraphQL<PortfolioSchema>();
+                endpoints.MapGraphQLPlayground();
+
                 endpoints.MapControllerRoute(
                     name: "areas",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
@@ -79,6 +107,9 @@ namespace Portfolio
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+
+
+
         }
     }
 }

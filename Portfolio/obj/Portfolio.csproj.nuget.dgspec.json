@@ -44,9 +44,33 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "GraphQL": {
+              "target": "Package",
+              "version": "[4.6.1, )"
+            },
+            "GraphQL.Server.Authorization.AspNetCore": {
+              "target": "Package",
+              "version": "[5.0.2, )"
+            },
+            "GraphQL.Server.Transports.AspNetCore": {
+              "target": "Package",
+              "version": "[5.0.2, )"
+            },
+            "GraphQL.Server.Transports.AspNetCore.SystemTextJson": {
+              "target": "Package",
+              "version": "[5.0.2, )"
+            },
+            "GraphQL.Server.Transports.Subscriptions.WebSockets": {
+              "target": "Package",
+              "version": "[5.0.2, )"
+            },
+            "GraphQL.Server.Ui.Playground": {
+              "target": "Package",
+              "version": "[5.0.2, )"
+            },
             "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
               "target": "Package",
-              "version": "[5.0.10, )"
+              "version": "[5.0.11, )"
             },
             "Microsoft.AspNetCore.SpaServices.Extensions": {
               "target": "Package",
@@ -62,9 +86,17 @@
               "target": "Package",
               "version": "[5.0.11, )"
             },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[5.0.2, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
             }
           },
           "imports": [

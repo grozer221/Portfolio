@@ -13,13 +13,11 @@ namespace Portfolio.Areas.Admin.Controllers
     [Authorize(Roles = "admin")]
     public class TechnologiesController : Controller
     {
-        private readonly AppDatabaseContext _ctx;
         private readonly TechnologiesRepository _technologiesRep;
 
-        public TechnologiesController(AppDatabaseContext context)
+        public TechnologiesController(TechnologiesRepository technologiesRep)
         {
-            _ctx = context;
-            _technologiesRep = new TechnologiesRepository(_ctx);
+            _technologiesRep = technologiesRep;
         }
 
         // GET: Admin/Technologies

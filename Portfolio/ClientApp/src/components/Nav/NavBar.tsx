@@ -21,7 +21,7 @@ export const NavBar: React.FC = () => {
     };
 
     return (
-        <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+        <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal" style={{height: '50px'}}>
             <Menu.Item key="logo">
                 <Link to={'/'}>LOGO</Link>
             </Menu.Item>

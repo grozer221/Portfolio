@@ -1,0 +1,28 @@
+.wrapperProjects {
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.wrapperProject {
+    margin: 10px;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.wrapperImage{
+    width: 100%;
+    height: 50%;
+    overflow: hidden;
+}
+
+.image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.name{
+
+}

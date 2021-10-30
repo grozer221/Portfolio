@@ -16,5 +16,11 @@ namespace Portfolio.Repositories
         {
             return await _ctx.Roles.FirstOrDefaultAsync(r => r.RoleName == name);
         }
+        
+        public async Task<RoleModel> GetRoleByUserLogin(string login)
+        {
+            var user = await _ctx.Users.Include(u => u.Role).FirstOrDefaultAsync(r => r.Login == login);
+            return user.Role;
+        }
     }
 }

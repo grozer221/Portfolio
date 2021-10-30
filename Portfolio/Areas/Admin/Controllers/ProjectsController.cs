@@ -18,28 +18,26 @@ namespace Portfolio.Areas.Admin.Controllers
     [Authorize(Roles = "admin")]
     public class ProjectsController : Controller
     {
-        private readonly AppDatabaseContext _ctx;
         private readonly ProjectsRepository _projectsRep;
         private readonly TechnologiesRepository _technologiesRep;
         private readonly LikesRepository _likesRep;
         private readonly CommentsRepository _commentsRep;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProjectsController(AppDatabaseContext context, IWebHostEnvironment webHostEnvironment)
+        public ProjectsController(IWebHostEnvironment webHostEnvironment,
+            ProjectsRepository projectsRep, TechnologiesRepository technologiesRep,
+            LikesRepository likesRep, CommentsRepository commentsRep)
         {
-            _ctx = context;
-            _projectsRep = new ProjectsRepository(_ctx);
-            _technologiesRep = new TechnologiesRepository(_ctx);
-            _likesRep = new LikesRepository(_ctx);
-            _commentsRep = new CommentsRepository(_ctx);
+            _projectsRep = projectsRep;
+            _technologiesRep = technologiesRep;
+            _likesRep = likesRep;
+            _commentsRep = commentsRep;
             _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Admin/Projects
-        public async Task<IActionResult> Index(int page = 1)
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 6)
         {
-            int pageSize = 6;
-
             int count = await _projectsRep.GetCount();
             List<ProjectModel> items = await _projectsRep.GetProjectsIncludedTechnologiesAsync(page, pageSize);
 
@@ -109,7 +107,7 @@ namespace Portfolio.Areas.Admin.Controllers
             List<TechnologyModel> allTechnologies = await _technologiesRep.GetTechnologiesAsync();
             List<SelectListItem> resultTechnologies = new List<SelectListItem>();
             foreach (var technologyFromAll in allTechnologies)
-                 resultTechnologies.Add(new SelectListItem { Text = technologyFromAll.Name, Value = technologyFromAll.Id.ToString(), Selected = false });
+                resultTechnologies.Add(new SelectListItem { Text = technologyFromAll.Name, Value = technologyFromAll.Id.ToString(), Selected = false });
             int i = 0;
             foreach (var technologyFromProject in technologiesInProject)
                 if (resultTechnologies.Any(t => t.Value == technologyFromProject.Id.ToString()))
@@ -177,7 +175,7 @@ namespace Portfolio.Areas.Admin.Controllers
             TempData["Success"] = "The project has been deleted";
             return RedirectToAction(nameof(Index));
         }
-        
+
         // POST: Admin/Projects/Like/5
         [HttpPost]
         public async Task<IActionResult> Like(int id)
@@ -187,7 +185,7 @@ namespace Portfolio.Areas.Admin.Controllers
             else
                 return BadRequest();
         }
-        
+
         // POST: Admin/Projects/UnLike/5
         [HttpPost]
         public async Task<IActionResult> UnLike(int id)

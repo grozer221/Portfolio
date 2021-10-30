@@ -11,11 +11,11 @@ namespace Portfolio.Repositories
         private readonly AppDatabaseContext _ctx;
         private readonly UsersRepository _usersRep;
         private readonly ProjectsRepository _projectRep;
-        public CommentsRepository(AppDatabaseContext ctx)
+        public CommentsRepository(AppDatabaseContext ctx, UsersRepository usersRep, ProjectsRepository projectRep)
         {
             _ctx = ctx;
-            _usersRep = new UsersRepository(_ctx);
-            _projectRep = new ProjectsRepository(_ctx);
+            _usersRep = usersRep;
+            _projectRep = projectRep;
         }
 
         public async Task<int> GetCommentsCount(int projectId)

@@ -10,10 +10,10 @@ namespace Portfolio.Repositories
     {
         private readonly AppDatabaseContext _ctx;
         private readonly TechnologiesRepository _technologiesRep;
-        public ProjectsRepository(AppDatabaseContext ctx)
+        public ProjectsRepository(AppDatabaseContext ctx, TechnologiesRepository technologiesRep)
         {
             _ctx = ctx;
-            _technologiesRep = new TechnologiesRepository(_ctx);
+            _technologiesRep = technologiesRep;
         }
 
         public async Task<int> GetCount()
@@ -29,6 +29,17 @@ namespace Portfolio.Repositories
         public async Task<List<ProjectModel>> GetProjectsIncludedTechnologiesAsync(int pageNumber, int pageSize)
         {
             return await _ctx.Projects.Include(p => p.Technologies).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+        }
+        
+        public async Task<List<ProjectModel>> GetProjectsIncludedUsersTechnologiesLikesCommentsAsync(int pageNumber, int pageSize)
+        {
+            return await _ctx.Projects
+                .Include(p => p.CreatedByUser)
+                .Include(p => p.Technologies)
+                .Include(p => p.Likes)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.User)
+                .Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
         }
 
         public async Task<ProjectModel> GetProjectById(int id)
@@ -49,6 +60,18 @@ namespace Portfolio.Repositories
         public async Task<ProjectModel> GetProjectIncludedTechnologiesLikesCommentsByIdAsync(int id)
         {
             return await _ctx.Projects.Include(p => p.Technologies).Include(p => p.Likes).Include(p => p.Comments).FirstOrDefaultAsync(p => p.Id == id);
+        }
+        
+        public async Task<ProjectModel> GetProjectIncludedUsersTechnologiesLikesCommentsByIdAsync(int id)
+        {
+            return await _ctx.Projects
+                .Include(p => p.CreatedByUser)
+                .Include(p => p.Technologies)
+                .Include(p => p.Likes)
+                .ThenInclude(l => l.User)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.User)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
         
         public async Task<ProjectModel> GetProjectIncludedUsersCommentsByIdAsync(int id)
