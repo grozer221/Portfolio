@@ -31,7 +31,8 @@ namespace Portfolio.Models
         [Display(Name = "IOS app link")]
         public string IOSAppLink { get; set; }
 
-        public virtual UserModel CreatedByUser { get; set; }
+        public virtual int UserId { get; set; }
+        public virtual UserModel User { get; set; }
 
         public virtual List<TechnologyModel> Technologies { get; set; }
 

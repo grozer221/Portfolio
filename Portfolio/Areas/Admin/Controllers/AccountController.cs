@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Portfolio.Models;
 using Portfolio.Repositories;
+using Portfolio.Utils;
 
 namespace Portfolio.Areas.Admin.Controllers
 {
@@ -33,7 +34,7 @@ namespace Portfolio.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                UserModel user = await _usersRep.GetUserWithRoleByLogin(model.Login, model.Password);
+                UserModel user = _usersRep.GetUserWithRoleByLogin(model.Login, Hashing.GetHashString(model.Password));
                 if (user != null)
                 {
                     await Authenticate(user.Login, user.Role.RoleName);
@@ -56,11 +57,11 @@ namespace Portfolio.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                UserModel user = await _usersRep.GetUserByLogin(model.Login);
+                UserModel user = await _usersRep.GetByLoginIncludedRoleAsync(model.Login);
                 if (user == null)
                 {
                     RoleModel userRole = await _rolesRep.GetRoleByName("user");
-                    user = new UserModel { Login = model.Login, Password = model.Password, Role = userRole };
+                    user = new UserModel { Login = model.Login, Password = Hashing.GetHashString(model.Password), Role = userRole };
                     await _usersRep.AddUser(user);
                     await Authenticate(user.Login, user.Role.RoleName);
                     return RedirectToAction("Index", "Home");

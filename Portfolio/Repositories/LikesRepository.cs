@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Portfolio.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,6 +19,16 @@ namespace Portfolio.Repositories
             _projectRep = projectRep;
         }
 
+        public async Task<LikeModel> GetByIdAsync(int id)
+        {
+            return await _ctx.Likes.FindAsync(id);
+        }
+        
+        public List<LikeModel> GetByProjectId(int projectId)
+        {
+            return _ctx.Projects.Include(p => p.Likes).FirstOrDefault(p => p.Id == projectId).Likes;
+        }
+        
         public async Task<int> GetLikesCount(int projectId)
         {
             return await _ctx.Likes.Where(l => l.Project.Id == projectId).CountAsync();

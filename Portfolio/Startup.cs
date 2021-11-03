@@ -1,32 +1,37 @@
 using GraphQL;
 using GraphQL.Server;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using GraphQL.Server.Authorization.AspNetCore;
+using GraphQL.Validation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Portfolio.GraphQL;
 using Portfolio.Repositories;
+using Portfolio.Services;
+using System.Security.Claims;
+using System.Text;
 
 namespace Portfolio
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlServer")));
-
             services.AddTransient<UsersRepository>();
             services.AddTransient<RolesRepository>();
             services.AddTransient<TechnologiesRepository>();
@@ -34,6 +39,35 @@ namespace Portfolio
             services.AddTransient<CommentsRepository>();
             services.AddTransient<LikesRepository>();
 
+            services.AddTransient<IdentityService>();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = true,
+                    ValidateIssuer = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidAudience = "audience",
+                    ValidIssuer = "issuer",
+                    RequireSignedTokens = false,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("SecretKey").Value))
+                };
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+            })
+            .AddCookie(options =>
+            {
+                options.LoginPath = new PathString("/admin/account/login");
+            });
+
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<PortfolioSchema>();
             services
                 .AddGraphQL()
@@ -41,14 +75,16 @@ namespace Portfolio
                 .AddSystemTextJson()
                 .AddWebSockets()
                 .AddDataLoader()
-                .AddGraphTypes(typeof(PortfolioSchema));
-
-
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
+                .AddGraphTypes(typeof(PortfolioSchema))
+                .AddGraphQLAuthorization(options =>
                 {
-                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/admin/account/login");
-                });
+                    options.AddPolicy("Authenticated", p => p.RequireAuthenticatedUser());
+                    //options.AddPolicy("Admin", p => p.RequireClaim(ClaimTypes.Role, "admin"));
+                    //options.AddPolicy("User", p => p.RequireClaim(ClaimTypes.Role, "user"));
+                })
+                .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true);
+
+
 
             services.AddControllersWithViews();
 
@@ -58,7 +94,6 @@ namespace Portfolio
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -67,8 +102,8 @@ namespace Portfolio
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                //app.UseExceptionHandler("/Home/Error");
+                app.UseStatusCodePagesWithRedirects("/admin/error/{0}");
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -79,11 +114,6 @@ namespace Portfolio
             app.UseAuthentication();
             app.UseAuthorization();
 
-          //  app.UseWebSockets();
-          //  app.UseGraphQLWebSockets<PortfolioSchema>();
-            //app.UseGraphQL<PortfolioSchema>();
-            //app.UseGraphQLPlayground();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGraphQL<PortfolioSchema>();
@@ -92,10 +122,6 @@ namespace Portfolio
                 endpoints.MapControllerRoute(
                     name: "areas",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
-                //endpoints.MapControllerRoute(
-                //    name: "default",
-                //    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
             app.UseSpa(spa =>
@@ -107,9 +133,6 @@ namespace Portfolio
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
-
-
-
         }
     }
 }

@@ -1,11 +1,12 @@
 ﻿using GraphQL.Types;
 using Portfolio.Models;
+using Portfolio.Repositories;
 
 namespace Portfolio.GraphQL.Types
 {
     public class CommentType : ObjectGraphType<CommentModel>
     {
-        public CommentType()
+        public CommentType(UsersRepository userRep)
         {
             Field(u => u.Id, 
                 type: typeof(IdGraphType))
@@ -21,8 +22,8 @@ namespace Portfolio.GraphQL.Types
 
             Field<UserType>(
                 name: nameof(CommentModel.User),
-                resolve: context => context.Source.User,
-                description: "User who create Comment");
+                resolve: context => userRep.GetById(context.Source.UserId),
+                description: "User who created Comment");
         }
     }
 }

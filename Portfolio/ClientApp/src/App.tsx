@@ -3,36 +3,45 @@ import './App.css';
 import 'antd/dist/antd.css';
 import {NavBar} from "./components/Nav/NavBar";
 import {Home} from "./components/Home/Home";
-import {useDispatch, useSelector} from "react-redux";
-import {useHistory, Route, Switch} from 'react-router-dom';
-import {s_getIsAuth} from "./redux/auth-selectors";
-import {s_getInitialised} from "./redux/app-selectors";
-import {initialiseApp} from "./redux/app-reducer";
+import {useDispatch} from "react-redux";
+import {Route, Switch, useHistory} from 'react-router-dom';
 import {Loading} from "./components/common/Loading/Loading";
 import {Button, Result} from "antd";
 import {Login} from "./components/Login/Login";
 import {Projects} from "./components/Projects/Projects";
+import {Profile} from "./components/Profile/Profile";
+import {ViewProject} from "./components/ViewProject/ViewProject";
+import {actions} from "./redux/auth-reducer";
+import {useQuery} from "@apollo/client";
+import {GET_CURRENT_USER, GetCurrentUserData,} from "./GraphQL/Queries";
 
 export const App: React.FC = () => {
-    const isAuth = useSelector(s_getIsAuth);
-    const initialised = useSelector(s_getInitialised);
     const history = useHistory();
     const dispatch = useDispatch();
+    const {data, error, loading} = useQuery<GetCurrentUserData>(GET_CURRENT_USER);
 
     useEffect(() => {
-        dispatch(initialiseApp());
-    }, [isAuth]);
+        if (data && !error) {
+            dispatch(actions.setAuthData(data.currentUser, true))
+        }
+    }, [data, error]);
 
-    if (!initialised)
+    if (loading)
         return <Loading/>
 
     return (
         <div className='container'>
-            <NavBar/>
-            <div className='content'>
+            <div className="wrapperProfile">
+                <Profile/>
+            </div>
+            <div className="wrapperNav">
+                <NavBar/>
+            </div>
+            <div className="wrapperContent">
                 <Switch>
                     <Route exact path="/" render={() => <Home/>}/>
                     <Route exact path="/projects" render={() => <Projects/>}/>
+                    <Route exact path="/project/:id?" render={() => <ViewProject/>}/>
                     <Route exact path="/login" render={() => <Login/>}/>
                     <Route path="*" render={() => <Result
                         status="404"
@@ -42,6 +51,7 @@ export const App: React.FC = () => {
                     />}/>
                 </Switch>
             </div>
+
         </div>
     );
 }

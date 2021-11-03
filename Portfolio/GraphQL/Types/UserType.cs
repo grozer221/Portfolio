@@ -1,11 +1,13 @@
-﻿using GraphQL.Types;
+﻿using GraphQL;
+using GraphQL.Types;
 using Portfolio.Models;
+using Portfolio.Repositories;
 
 namespace Portfolio.GraphQL.Types
 {
     public class UserType : ObjectGraphType<UserModel>
     {
-        public UserType()
+        public UserType(RolesRepository rolesRep)
         {
             Field(u => u.Id, 
                 type: typeof(IdGraphType))
@@ -17,7 +19,7 @@ namespace Portfolio.GraphQL.Types
 
             Field<RoleType>(
                 name: nameof(UserModel.Role),
-                resolve: context => context.Source.Role,
+                resolve: context => rolesRep.GetByUserIdAsync(context.Source.Id),
                 description: "Role of User");
         }
     }

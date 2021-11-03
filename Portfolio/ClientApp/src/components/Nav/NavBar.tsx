@@ -1,48 +1,50 @@
-import React, {useState} from "react";
-import {Menu} from 'antd';
-import {AppstoreOutlined} from '@ant-design/icons';
+import React from "react";
 import s from './NavBar.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import {s_getCurrentUser, s_getIsAuth} from "../../redux/auth-selectors";
-import {logout} from "../../redux/auth-reducer";
 import {Link} from "react-router-dom";
-import {UserOutlined} from "@ant-design/icons/lib";
-
-const {SubMenu} = Menu;
+import Cookies from "js-cookie";
+import {actions} from "../../redux/auth-reducer";
 
 export const NavBar: React.FC = () => {
-    const [current, setCurrent] = useState<string>('logo');
     const isAuth = useSelector(s_getIsAuth);
     const currentUser = useSelector(s_getCurrentUser);
     const dispatch = useDispatch();
 
-    const handleClick = (e: any) => {
-        setCurrent(e.key)
-    };
+    const logoutHandler = () => {
+        Cookies.remove('token');
+        dispatch(actions.setAuthData(null, false));
+    }
 
     return (
-        <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal" style={{height: '50px'}}>
-            <Menu.Item key="logo">
-                <Link to={'/'}>LOGO</Link>
-            </Menu.Item>
-            <Menu.Item key="projects" icon={<AppstoreOutlined/>}>
-                <Link to={'/projects'}>Projects</Link>
-            </Menu.Item>
-            {isAuth
-                ? <SubMenu key="user" icon={<UserOutlined/>} title={currentUser.login}>
-                    <Menu.ItemGroup>
-                        <Menu.Item key="user:adminpanel">
-                            <a href={'/admin'}>AdminPanel</a>
-                        </Menu.Item>
-                        <Menu.Item key="user:logout" onClick={() => dispatch(logout())}>Logout</Menu.Item>
-                    </Menu.ItemGroup>
-                </SubMenu>
-                : <Menu.Item key="login">
-                    <Link to={'/login'}>Login</Link>
-                </Menu.Item>
-            }
+        <div className={s.navBar}>
+            <div className={s.links}>
+                <Link to={'/'} className={s.navItem}>
+                    Home
+                </Link>
+                <Link to={'/projects'} className={s.navItem}>
+                    Projects
+                </Link>
+                <Link to={'/projects'} className={s.navItem}>
+                    Projects
+                </Link>
+                <Link to={'/projects'} className={s.navItem}>
+                    Projects
+                </Link>
+            </div>
+            <div className={s.links}>
+                {isAuth
+                    ? <div className={s.dropdown}>
+                        <div className={s.dropbtn}>{currentUser?.login}</div>
+                        <div className={s.dropdownContent}>
+                            {currentUser?.role?.roleName === 'admin' && <a href={'/admin'}>AdminPanel</a>}
+                            <a onClick={logoutHandler}>Logout</a>
+                        </div>
+                    </div>
+                    : <Link to={'/login'} className={s.navItem}>Login</Link>}
 
-        </Menu>
+            </div>
+        </div>
     );
 }
 

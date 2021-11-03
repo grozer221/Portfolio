@@ -15,27 +15,44 @@ namespace Portfolio.Repositories
             _ctx = ctx;
         }
 
-        public async Task<UserModel> GetUserIncludedRoleById(int id)
+        //public async Task<UserModel> GetUserIncludedRoleById(int id)
+        //{
+        //    return await _ctx.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == id);
+        //}
+        
+        
+        public UserModel GetById(int id)
         {
-            return await _ctx.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == id);
+            return _ctx.Users.Find(id);
         }
 
-        public async Task<UserModel> GetUserByLogin(string login)
+        public async Task<UserModel> GetByLoginIncludedRoleAsync(string login)
+        {
+            return await _ctx.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Login == login);
+        }
+        
+        public async Task<UserModel> GetByLoginAsync(string login)
         {
             return await _ctx.Users.FirstOrDefaultAsync(u => u.Login == login);
         }
 
-        public List<UserModel> GetUsersByRoleName(string roleName)
+        public async Task<List<UserModel>> GetByRoleId(int roleId)
         {
-            return _ctx.Roles.Include(r => r.Users).FirstOrDefault(r => r.RoleName == roleName).Users.ToList();
+            RoleModel role = await _ctx.Roles.Include(r => r.Users).FirstOrDefaultAsync(r => r.Id == roleId);
+            return role.Users;
         }
 
-        public async Task<UserModel> GetUserWithRoleByLogin(string login, string password)
+        public UserModel GetUserWithRoleByLogin(string login, string password)
         {
-            return await _ctx.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Login == login && u.Password == password);
+            return _ctx.Users.Include(u => u.Role).FirstOrDefault(u => u.Login == login && u.Password == password);
         }
 
-        public async Task<UserModel> GetUserWithRoleByLogin(string login)
+        public UserModel GetUserWithRoleByLogin(string login)
+        {
+            return _ctx.Users.Include(u => u.Role).FirstOrDefault(u => u.Login == login);
+        }
+        
+        public async Task<UserModel> GetUserWithRoleByLoginAsync(string login)
         {
             return await _ctx.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Login == login);
         }
@@ -46,9 +63,14 @@ namespace Portfolio.Repositories
             await _ctx.SaveChangesAsync();
         }
 
-        public async Task<List<UserModel>> GetUsersIncludedRoleAsync(int pageNumber = 1, int pageSize = 6)
+        //public async Task<List<UserModel>> GetUsersIncludedRoleAsync(int pageNumber = 1, int pageSize = 6)
+        //{
+        //    return await _ctx.Users.Include(u => u.Role).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+        //}
+        
+        public List<UserModel> Get(int pageNumber = 1, int pageSize = 6)
         {
-            return await _ctx.Users.Include(u => u.Role).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            return _ctx.Users.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
         }
     }
 }

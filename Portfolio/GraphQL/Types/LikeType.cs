@@ -1,13 +1,14 @@
 ﻿using GraphQL.Types;
 using Portfolio.Models;
+using Portfolio.Repositories;
 
 namespace Portfolio.GraphQL.Types
 {
     public class LikeType : ObjectGraphType<LikeModel>
     {
-        public LikeType()
+        public LikeType(UsersRepository usersRep)
         {
-            Field(u => u.Id, 
+            Field(u => u.Id,
                 type: typeof(IdGraphType))
                 .Description("Comment Id");
 
@@ -17,8 +18,8 @@ namespace Portfolio.GraphQL.Types
 
             Field<UserType>(
                 name: nameof(CommentModel.User),
-                resolve: context => context.Source.User,
-                description: "User who create Comment");
+                description: "User who created Like",
+                resolve: context => usersRep.GetById(context.Source.UserId));
         }
     }
 }

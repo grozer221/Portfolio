@@ -16,6 +16,11 @@ namespace Portfolio.Repositories
             _technologiesRep = technologiesRep;
         }
 
+        public ProjectModel GetById(int id)
+        {
+            return _ctx.Projects.Find(id);
+        }
+        
         public async Task<int> GetCount()
         {
             return await _ctx.Projects.CountAsync();
@@ -31,15 +36,20 @@ namespace Portfolio.Repositories
             return await _ctx.Projects.Include(p => p.Technologies).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
         }
         
-        public async Task<List<ProjectModel>> GetProjectsIncludedUsersTechnologiesLikesCommentsAsync(int pageNumber, int pageSize)
+        //public async Task<List<ProjectModel>> GetProjectsIncludedUsersTechnologiesLikesCommentsAsync(int pageNumber, int pageSize)
+        //{
+        //    return await _ctx.Projects
+        //        .Include(p => p.User)
+        //        .Include(p => p.Technologies)
+        //        .Include(p => p.Likes)
+        //        .Include(p => p.Comments)
+        //        .ThenInclude(c => c.User)
+        //        .Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+        //}
+        
+        public List<ProjectModel> Get(int pageNumber, int pageSize)
         {
-            return await _ctx.Projects
-                .Include(p => p.CreatedByUser)
-                .Include(p => p.Technologies)
-                .Include(p => p.Likes)
-                .Include(p => p.Comments)
-                .ThenInclude(c => c.User)
-                .Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            return _ctx.Projects.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
         }
 
         public async Task<ProjectModel> GetProjectById(int id)
@@ -62,21 +72,22 @@ namespace Portfolio.Repositories
             return await _ctx.Projects.Include(p => p.Technologies).Include(p => p.Likes).Include(p => p.Comments).FirstOrDefaultAsync(p => p.Id == id);
         }
         
-        public async Task<ProjectModel> GetProjectIncludedUsersTechnologiesLikesCommentsByIdAsync(int id)
-        {
-            return await _ctx.Projects
-                .Include(p => p.CreatedByUser)
-                .Include(p => p.Technologies)
-                .Include(p => p.Likes)
-                .ThenInclude(l => l.User)
-                .Include(p => p.Comments)
-                .ThenInclude(c => c.User)
-                .FirstOrDefaultAsync(p => p.Id == id);
-        }
+        //public async Task<ProjectModel> GetProjectIncludedUsersTechnologiesLikesCommentsByIdAsync(int id)
+        //{
+        //    return await _ctx.Projects
+        //        .Include(p => p.User)
+        //        .Include(p => p.Technologies)
+        //        .Include(p => p.Likes)
+        //        .ThenInclude(l => l.User)
+        //        .Include(p => p.Comments)
+        //        .ThenInclude(c => c.User)
+        //        .FirstOrDefaultAsync(p => p.Id == id);
+        //}
+        
         
         public async Task<ProjectModel> GetProjectIncludedUsersCommentsByIdAsync(int id)
         {
-            return await _ctx.Projects.Include(p => p.CreatedByUser).Include(p => p.Comments).FirstOrDefaultAsync(p => p.Id == id);
+            return await _ctx.Projects.Include(p => p.User).Include(p => p.Comments).FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task AddProject(string userLogin, ProjectModel project)

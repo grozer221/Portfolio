@@ -18,7 +18,7 @@ namespace Portfolio.GraphQL.Types
 
             Field<ListGraphType<UserType>>(
                 name: nameof(RoleModel.Users),
-                resolve: context => usersRep.GetUsersByRoleName(context.Source.RoleName),
+                resolve: context => usersRep.GetByRoleId(context.Source.Id),
                 description: "Users in Role");
         }
     }

@@ -1,14 +1,15 @@
 ﻿using GraphQL.Types;
-using Portfolio.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace Portfolio.GraphQL
 {
     public class PortfolioSchema : Schema
     {
-        public PortfolioSchema(UsersRepository usersRep, ProjectsRepository projectRep, IServiceProvider provider) : base(provider)
+        public PortfolioSchema(IServiceProvider provider) : base(provider)
         {
-            Query = new PortfolioQuery(usersRep, projectRep);
+            Query = provider.GetRequiredService<PortfolioQuery>();
+            Mutation = provider.GetRequiredService<PortfolioMutation>();
         }
     }
 }

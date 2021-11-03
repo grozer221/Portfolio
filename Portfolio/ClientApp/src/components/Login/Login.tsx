@@ -1,21 +1,39 @@
-import React from "react";
-import s from './Login.module.css';
+import React, {useEffect} from "react";
 import {Button, Form, Input} from "antd";
 import {LockOutlined, UserOutlined} from "@ant-design/icons/lib";
 import {useDispatch, useSelector} from "react-redux";
-import {login} from "../../redux/auth-reducer";
 import {s_getIsAuth} from "../../redux/auth-selectors";
-import { Redirect } from "react-router-dom";
+import {Redirect} from "react-router-dom";
+import {useMutation} from "@apollo/client";
+import {AUTHENTICATION, AuthenticationData, AuthenticationVars} from "../../GraphQL/Mutations";
+import Cookies from "js-cookie";
+import {actions} from "../../redux/auth-reducer";
 
 export const Login: React.FC = () => {
     const dispatch = useDispatch();
     const isAuth = useSelector(s_getIsAuth);
+    const [authentication, {data, loading, error}] = useMutation<AuthenticationData, AuthenticationVars>(AUTHENTICATION);
 
-    const onFinish = (values: {login: string, password: string}) => {
-        dispatch(login(values.login, values.password));
+    useEffect(() => {
+        if (data && !error) {
+            Cookies.set('token', data?.authentication)
+        }
+        else
+            console.log(error)
+    }, [data, error]);
+
+
+    const onFinish = async (values: { login: string, password: string }) => {
+        await authentication({variables: {login: values.login, password: values.password}});
+        console.log(data, loading, error)
+        authentication({
+            variables: {
+                login: values.login, password: values.password
+            }
+        });
     };
 
-    if(isAuth)
+    if (isAuth)
         return <Redirect to={'/'}/>
 
     return (

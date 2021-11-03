@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Models;
 using Portfolio.Repositories;
+using Portfolio.Utils;
 using Portfolio.ViewModels;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -28,7 +29,7 @@ namespace Portfolio.Areas.Api.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                UserModel user = await _usersRep.GetUserWithRoleByLogin(User.Identity.Name);
+                UserModel user = await _usersRep.GetUserWithRoleByLoginAsync(User.Identity.Name);
                 return Json(new ResponseModel
                 {
                     ResultCode = 0,
@@ -36,7 +37,7 @@ namespace Portfolio.Areas.Api.Controllers
                     {
                         Id = user.Id,
                         Login = user.Login,
-                        RoleName = user.Role.RoleName,
+                        Role = new { RoleName = user.Role.RoleName },
                     }
                 });
             }
@@ -58,7 +59,7 @@ namespace Portfolio.Areas.Api.Controllers
                         ResultCode = 1,
                         Messages = new string[] { "User already authorized" },
                     });
-                UserModel user = await _usersRep.GetUserWithRoleByLogin(model.Login, model.Password);
+                UserModel user =  _usersRep.GetUserWithRoleByLogin(model.Login, Hashing.GetHashString(model.Password));
                 if (user != null)
                 {
                     await Authenticate(user.Login, user.Role.RoleName);
@@ -69,7 +70,7 @@ namespace Portfolio.Areas.Api.Controllers
                         {
                             Id = user.Id,
                             Login = user.Login,
-                            RoleName = user.Role.RoleName,
+                            Role = new { RoleName = user.Role.RoleName },
                         }
                     });
                 }
@@ -97,11 +98,11 @@ namespace Portfolio.Areas.Api.Controllers
                 });
             if (ModelState.IsValid)
             {
-                UserModel user = await _usersRep.GetUserByLogin(model.Login);
+                UserModel user = await _usersRep.GetByLoginIncludedRoleAsync(model.Login);
                 if (user == null)
                 {
                     RoleModel userRole = await _rolesRep.GetRoleByName("user");
-                    user = new UserModel { Login = model.Login, Password = model.Password, Role = userRole };
+                    user = new UserModel { Login = model.Login, Password = Hashing.GetHashString(model.Password), Role = userRole };
                     await _usersRep.AddUser(user);
                     await Authenticate(user.Login, user.Role.RoleName);
                     return Json(new ResponseModel
@@ -111,7 +112,7 @@ namespace Portfolio.Areas.Api.Controllers
                         {
                             Id = user.Id,
                             Login = user.Login,
-                            RoleName = user.Role.RoleName,
+                            Role = new { RoleName = user.Role.RoleName },
                         }
                     });
                 }

@@ -23,7 +23,8 @@ namespace Portfolio.Models
 
         public virtual List<ProjectModel> Projects { get; set; }
 
-        public virtual UserModel CreatedByUser { get; set; }
+        public virtual int UserId { get; set; }
+        public virtual UserModel User { get; set; }
 
         [NotMapped]
         public bool Selected { get; set; }

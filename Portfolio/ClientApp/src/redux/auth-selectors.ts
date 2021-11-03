@@ -11,7 +11,3 @@ export const s_getCurrentUser = (state: AppStateType) => {
 export const s_getIsAuth = (state: AppStateType) => {
     return state.auth.isAuth;
 }
-
-export const s_getIsFetching = (state: AppStateType) => {
-    return state.auth.isFetching;
-}

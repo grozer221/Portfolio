@@ -1,13 +1,15 @@
 ﻿using GraphQL;
 using GraphQL.Types;
+using Microsoft.AspNetCore.Http;
 using Portfolio.GraphQL.Types;
+using Portfolio.Models;
 using Portfolio.Repositories;
 
 namespace Portfolio.GraphQL
 {
     public class PortfolioQuery : ObjectGraphType
     {
-        public PortfolioQuery(UsersRepository userRep, ProjectsRepository projectRep)
+        public PortfolioQuery(IHttpContextAccessor httpContextAccessor, UsersRepository userRep, ProjectsRepository projectRep)
         {
             Name = "Query";
 
@@ -19,14 +21,22 @@ namespace Portfolio.GraphQL
                     new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "pageNumber", Description = "Page Number" },
                     new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "pageSize", Description = "Page Size" }
                     ),
-                resolve: context => userRep.GetUsersIncludedRoleAsync(context.GetArgument<int>("pageNumber"), context.GetArgument<int>("pageSize")));
+                resolve: context => userRep.Get(context.GetArgument<int>("pageNumber"), context.GetArgument<int>("pageSize")))
+                .AuthorizeWith("Authenticated");
 
             Field<UserType>("user",
                 description: "Returns a Single User",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id", Description = "User Id" }),
-                resolve: context => userRep.GetUserIncludedRoleById(context.GetArgument<int>("id")));
-            
-            
+                resolve: context => userRep.GetById(context.GetArgument<int>("id")))
+                .AuthorizeWith("Authenticated");
+
+
+            Field<UserType>("currentUser",
+                description: "Returns a Cureent User",
+                resolve: context => userRep.GetUserWithRoleByLogin(httpContextAccessor.HttpContext.User.Identity.Name))
+                .AuthorizeWith("Authenticated");
+
+
             /* ===Projects=== */
             Field<ListGraphType<ProjectType>>(
                 name: "projects",
@@ -35,13 +45,13 @@ namespace Portfolio.GraphQL
                     new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "pageNumber", Description = "Page Number" },
                     new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "pageSize", Description = "Page Size" }
                     ),
-                resolve: context => projectRep.GetProjectsIncludedUsersTechnologiesLikesCommentsAsync(context.GetArgument<int>("pageNumber"), context.GetArgument<int>("pageSize")));
+                resolve: context => projectRep.Get(context.GetArgument<int>("pageNumber"), context.GetArgument<int>("pageSize")));
 
             Field<ProjectType>(
                 name: "project",
                 description: "Returns a Single Project",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id", Description = "Project Id" }),
-                resolve: context => projectRep.GetProjectIncludedUsersTechnologiesLikesCommentsByIdAsync(context.GetArgument<int>("id")));
+                resolve: context => projectRep.GetById(context.GetArgument<int>("id")));
         }
     }
 }

@@ -1,12 +1,12 @@
 ﻿using GraphQL.Types;
 using Portfolio.Models;
-using System.Linq;
+using Portfolio.Repositories;
 
 namespace Portfolio.GraphQL.Types
 {
     public class ProjectType : ObjectGraphType<ProjectModel>
     {
-        public ProjectType()
+        public ProjectType(UsersRepository usersRep, TechnologiesRepository technologiesRep, CommentsRepository commentsRep, LikesRepository likesRep)
         {
             Field(u => u.Id, 
                 type: typeof(IdGraphType))
@@ -41,24 +41,24 @@ namespace Portfolio.GraphQL.Types
                 .Description("Project IOSAppLink");
 
             Field<UserType>(
-                name: nameof(ProjectModel.CreatedByUser),
+                name: nameof(ProjectModel.User),
                 description: "User who create Project",
-                resolve: context => context.Source.CreatedByUser);
+                resolve: context => usersRep.GetById(context.Source.UserId));
 
             Field<ListGraphType<TechnologyType>>(
                 name: nameof(ProjectModel.Technologies),
                 description: "List of Technologies",
-                resolve: context => context.Source.Technologies);
+                resolve: context => technologiesRep.GetByProjectId(context.Source.Id));
             
             Field<ListGraphType<CommentType>>(
                 name: nameof(ProjectModel.Comments),
                 description: "List of Comments",
-                resolve: context => context.Source.Comments);
+                resolve: context => commentsRep.GetByProjectId(context.Source.Id));
             
             Field<ListGraphType<LikeType>>(
                 name: nameof(ProjectModel.Likes),
                 description: "List of Likes",
-                resolve: context => context.Source.Likes);
+                resolve: context => likesRep.GetByProjectId(context.Source.Id));
         }
     }
 }

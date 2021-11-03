@@ -1,5 +1,5 @@
 * {
-    scrollbar-color: #CFD3E4 white;
+    scrollbar-color: #313131 #222222;
     scrollbar-width: thin;
     margin: 0;
     padding: 0;
@@ -13,20 +13,57 @@
 }
 
 ::-webkit-scrollbar-track {
-    background-color: white;
+    background-color: #222222;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #CFD3E4;
+    background-color: #313131;
     border-radius: 20px; /* закругления плашки */
 }
 
-.container{
+.container {
+    display: grid;
+    padding: 20px;
+    width: 100%;
     height: 100vh;
-    width: 70%;
-    margin: 0 auto;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr 8fr;
+    grid-template-areas: "p n"
+                         "p c";
+    grid-gap: 20px;
+    background-color: #0F0F0F;
+    color: white;
 }
 
-.content {
-    height: calc(100vh - 50px);
+.container > div {
+    background-color: #222222;
+    border-radius: 5px;
+}
+
+.wrapperProfile {
+    grid-area: p;
+}
+
+.wrapperNav {
+    grid-area: n;
+}
+
+.wrapperContent {
+    grid-area: c;
+    overflow-y: scroll;
+    position: relative;
+
+}
+
+.customButton{
+    background-color: #0F0F0F;
+    padding: 10px 30px;
+    border-radius: 5px;
+    color: white;
+    transition: .5s all ease;
+}
+
+.customButton:hover{
+    background-color: #424242;
+    color: white;
 }

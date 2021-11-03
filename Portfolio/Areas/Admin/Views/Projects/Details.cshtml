@@ -64,7 +64,7 @@
     @foreach (var comment in Model.Comments)
     {
         <div class="mb-2">
-            <div>@comment.User.Login</div>
+            <div>@comment?.User?.Login</div>
             <div>@comment.Text</div>
             <div>@comment.DateCreate</div>
         </div>

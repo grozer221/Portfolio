@@ -15,6 +15,16 @@ namespace Portfolio.Repositories
             _ctx = ctx;
         }
 
+        public async Task<TechnologyModel> GetByIdAsync(int id)
+        {
+            return await _ctx.Technologies.FindAsync(id);
+        }
+        
+        public List<TechnologyModel> GetByProjectId(int projectId)
+        {
+            return _ctx.Projects.Include(p => p.Technologies).FirstOrDefault(p => p.Id == projectId).Technologies;
+        }
+
         public async Task<int> GetCountAsync()
         {
             return await _ctx.Technologies.CountAsync();
