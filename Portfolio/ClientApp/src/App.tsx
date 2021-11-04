@@ -14,6 +14,7 @@ import {actions} from "./redux/auth-reducer";
 import {useQuery} from "@apollo/client";
 import {GET_CURRENT_USER, GetCurrentUserData,} from "./GraphQL/Queries";
 import {AuthType} from "./types/types";
+import {Register} from "./components/Register/Register";
 
 export const App: React.FC = () => {
     const history = useHistory();
@@ -41,6 +42,7 @@ export const App: React.FC = () => {
                         <Route exact path="/projects" render={() => <Projects/>}/>
                         <Route exact path="/project/:id?" render={() => <ViewProject/>}/>
                         <Route exact path="/login" render={() => <Login/>}/>
+                        <Route exact path="/register" render={() => <Register/>}/>
                         <Route path="*" render={() => <Result
                             status="404"
                             title="404"

@@ -4,6 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {s_getAuthData, s_getIsAuth} from "../../redux/auth-selectors";
 import {Link} from "react-router-dom";
 import {actions} from "../../redux/auth-reducer";
+import {Button, Dropdown, Menu, message} from "antd";
+import {DownOutlined, UserOutlined} from "@ant-design/icons/lib";
 
 export const NavBar: React.FC = () => {
     const isAuth = useSelector(s_getIsAuth);
@@ -14,6 +16,18 @@ export const NavBar: React.FC = () => {
         localStorage.removeItem('token');
         dispatch(actions.setAuthData(null, false));
     }
+
+    const menu = (
+        <Menu className={s.dropdownItems}>
+            {currentUser?.role.roleName === 'admin'
+            && <Menu.Item key="1" className={s.dropdownItem}>
+                <a href="/admin/account/login">AdminPanel</a>
+            </Menu.Item>}
+            <Menu.Item key="2" className={s.dropdownItem} onClick={logoutHandler}>
+                Logout
+            </Menu.Item>
+        </Menu>
+    );
 
     return (
         <div className={s.navBar}>
@@ -33,13 +47,11 @@ export const NavBar: React.FC = () => {
             </div>
             <div className={s.links}>
                 {isAuth
-                    ? <div className={s.dropdown}>
-                        <div className={s.dropbtn}>{currentUser?.login}</div>
-                        <div className={s.dropdownContent}>
-                            {currentUser?.role?.roleName === 'admin' && <a href={'/admin'}>AdminPanel</a>}
-                            <a onClick={logoutHandler}>Logout</a>
-                        </div>
-                    </div>
+                    ? <Dropdown overlay={menu} className={s.dropdown}>
+                        <Button>
+                            {currentUser?.login} <DownOutlined/>
+                        </Button>
+                    </Dropdown>
                     : <Link to={'/login'} className={s.navItem}>Login</Link>}
             </div>
         </div>

@@ -45,33 +45,6 @@ namespace Portfolio.Areas.Admin.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                UserModel user = await _usersRep.GetIncludedRoleAsync(model.Login);
-                if (user == null)
-                {
-                    RoleModel userRole = await _rolesRep.GetRoleByName("user");
-                    user = new UserModel { Login = model.Login, Password = Hashing.GetHashString(model.Password), Role = userRole };
-                    await _usersRep.AddUser(user);
-                    await Authenticate(user.Login, user.Role.RoleName);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                    ModelState.AddModelError("", "Wrong login or password");
-            }
-            return View(model);
-        }
-
         private async Task Authenticate(string userName, string roleName)
         {
             var claims = new List<Claim>

@@ -2,6 +2,7 @@ using GraphQL;
 using GraphQL.Server;
 using GraphQL.Server.Authorization.AspNetCore;
 using GraphQL.Validation;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,9 +44,15 @@ namespace Portfolio
 
             services.AddAuthentication(options =>
             {
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddCookie(options =>
+            {
+                options.LoginPath = new PathString("/admin/account/login");
+                options.AccessDeniedPath = "/admin/error/401";
             })
             .AddJwtBearer(options =>
             {
@@ -57,14 +64,10 @@ namespace Portfolio
                     ValidAudience = "audience",
                     ValidIssuer = "issuer",
                     RequireSignedTokens = false,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("SecretKey").Value))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("SecretKey").Value)),
                 };
                 options.RequireHttpsMetadata = false;
                 options.SaveToken = true;
-            })
-            .AddCookie(options =>
-            {
-                options.LoginPath = new PathString("/admin/account/login");
             });
 
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
@@ -79,8 +82,8 @@ namespace Portfolio
                 .AddGraphQLAuthorization(options =>
                 {
                     options.AddPolicy("Authenticated", p => p.RequireAuthenticatedUser());
-                    //options.AddPolicy("Admin", p => p.RequireClaim(ClaimTypes.Role, "admin"));
-                    //options.AddPolicy("User", p => p.RequireClaim(ClaimTypes.Role, "user"));
+                    options.AddPolicy("Admin", p => p.RequireClaim(ClaimTypes.Role, "admin"));
+                    options.AddPolicy("User", p => p.RequireClaim(ClaimTypes.Role, "user"));
                 })
                 .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true);
 

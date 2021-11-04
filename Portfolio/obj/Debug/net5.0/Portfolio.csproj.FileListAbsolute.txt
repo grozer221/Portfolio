@@ -438,7 +438,6 @@ D:\Projects\Portfolio\Portfolio\obj\Debug\net5.0\Razor\Areas\Admin\Views\Technol
 D:\Projects\Portfolio\Portfolio\obj\Debug\net5.0\Razor\Areas\Admin\Views\Technologies\Edit.cshtml.g.cs
 D:\Projects\Portfolio\Portfolio\obj\Debug\net5.0\Razor\Areas\Admin\Views\Technologies\Index.cshtml.g.cs
 D:\Projects\Portfolio\Portfolio\obj\Debug\net5.0\Razor\Areas\Admin\Views\Account\Login.cshtml.g.cs
-D:\Projects\Portfolio\Portfolio\obj\Debug\net5.0\Razor\Areas\Admin\Views\Account\Register.cshtml.g.cs
 D:\Projects\Portfolio\Portfolio\bin\Debug\net5.0\ClientApp\.eslintrc.json
 D:\Projects\Portfolio\Portfolio\bin\Debug\net5.0\ClientApp\build\asset-manifest.json
 D:\Projects\Portfolio\Portfolio\bin\Debug\net5.0\ClientApp\build\manifest.json
@@ -466,5 +465,5 @@ D:\Projects\Portfolio\Portfolio\bin\Debug\net5.0\System.Reactive.dll
 D:\Projects\Portfolio\Portfolio\bin\Debug\net5.0\System.Reactive.xml
 D:\Projects\Portfolio\Portfolio\bin\Debug\net5.0\GraphQL.Server.Authorization.AspNetCore.dll
 D:\Projects\Portfolio\Portfolio\obj\Debug\net5.0\Razor\Areas\Admin\Views\Error\Index.cshtml.g.cs
-D:\Projects\Portfolio\Portfolio\obj\Debug\net5.0\Portfolio.csproj.AssemblyReference.cache
 D:\Projects\Portfolio\Portfolio\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Projects\Portfolio\Portfolio\obj\Debug\net5.0\Portfolio.csproj.AssemblyReference.cache

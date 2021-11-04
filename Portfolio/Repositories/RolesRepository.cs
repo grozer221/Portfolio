@@ -29,7 +29,12 @@ namespace Portfolio.Repositories
             return user.Role;
         }
         
-        public async Task<RoleModel> GetRoleByName(string name)
+        public RoleModel GetRoleByName(string name)
+        {
+            return _ctx.Roles.FirstOrDefault(r => r.RoleName == name);
+        }
+        
+        public async Task<RoleModel> GetRoleByNameAsync(string name)
         {
             return await _ctx.Roles.FirstOrDefaultAsync(r => r.RoleName == name);
         }

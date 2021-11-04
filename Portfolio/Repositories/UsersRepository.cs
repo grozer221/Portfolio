@@ -96,10 +96,24 @@ namespace Portfolio.Repositories
             return role.Users;
         }
 
-        public async Task AddUser(UserModel user)
+        public UserModel Add(string login, string password, RoleModel role)
+        {
+            UserModel user = new UserModel
+            {
+                Login = login,
+                Password = Hashing.GetHashString(password),
+                Role = role
+            };
+            _ctx.Users.Add(user);
+            _ctx.SaveChanges();
+            return user;
+        }
+        
+        public async Task<UserModel> AddAsync(UserModel user)
         {
             _ctx.Users.Add(user);
             await _ctx.SaveChangesAsync();
+            return user;
         }
     }
 }

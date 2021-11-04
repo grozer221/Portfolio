@@ -1,25 +1,30 @@
-import React, {useEffect} from "react";
+import React from "react";
+import s from './Register.module.css';
 import {Button, Form, Input} from "antd";
 import {LockOutlined, UserOutlined} from "@ant-design/icons/lib";
+import {Link, Redirect} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {s_getIsAuth} from "../../redux/auth-selectors";
-import {Link, Redirect, useHistory} from "react-router-dom";
 import {useMutation} from "@apollo/client";
-import {AUTHENTICATION, AuthenticationData, AuthenticationVars} from "../../GraphQL/Mutations";
-import s from './Login.module.css';
+import {REGISTER, RegisterData, RegisterVars} from "../../GraphQL/Mutations";
 import {actions} from "../../redux/auth-reducer";
 
-export const Login: React.FC = () => {
+export const Register: React.FC = () => {
     const dispatch = useDispatch();
     const isAuth = useSelector(s_getIsAuth);
-    const [authentication, {data, loading, error}] = useMutation<AuthenticationData, AuthenticationVars>(AUTHENTICATION);
-    const history = useHistory()
+    const [register, {data, loading, error}] = useMutation<RegisterData, RegisterVars>(REGISTER);
 
-    const onFinish = async (values: { login: string, password: string }) => {
-        const response = await authentication({variables: {login: values.login, password: values.password}});
+    const onFinish = async (values: { login: string, password: string, passwordConfirm: string }) => {
+        const response = await register({
+            variables: {
+                login: values.login,
+                password: values.password,
+                passwordConfirm: values.passwordConfirm
+            }
+        });
         if (response.data) {
-            localStorage.setItem('token', response.data?.authentication.token)
-            dispatch(actions.setAuthData(response.data.authentication, true));
+            localStorage.setItem('token', response.data?.register.token)
+            dispatch(actions.setAuthData(response.data.register, true));
         } else
             console.log('error:', error)
     };
@@ -28,9 +33,9 @@ export const Login: React.FC = () => {
         return <Redirect to={'/'}/>
 
     return (
-        <div className={s.wrapperLoginForm}>
+        <div className={s.wrapperRegisterForm}>
             <Form
-                name="login-form"
+                name="register-form"
                 className="login-form"
                 onFinish={onFinish}
             >
@@ -54,13 +59,24 @@ export const Login: React.FC = () => {
                         className={s.formInput}
                     />
                 </Form.Item>
+                <Form.Item
+                    name="passwordConfirm"
+                    rules={[{required: true, message: 'Please input your Password Confirm!'}]}
+                >
+                    <Input
+                        prefix={<LockOutlined className="site-form-item-icon"/>}
+                        type="password"
+                        placeholder="Password Confirm"
+                        className={s.formInput}
+                    />
+                </Form.Item>
                 <Form.Item>
                     <div>
-                        Or <Link to={'/register'}>register now!</Link>
+                        Or <Link to={'/login'}>login now!</Link>
                     </div>
                     <div className={s.wrapperButton}>
                         <Button loading={loading} type="primary" htmlType="submit" className='login-form-button'>
-                            Log in
+                            Register
                         </Button>
                     </div>
                 </Form.Item>
