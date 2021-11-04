@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Portfolio.Models;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Portfolio.Repositories
@@ -16,7 +17,11 @@ namespace Portfolio.Repositories
         {
             return await _ctx.Roles.FindAsync(id);
         }
-
+        
+        public RoleModel GetByUser(string login, string password)
+        {
+            return _ctx.Users.Include(u => u.Role).FirstOrDefault(u => u.Login == login && u.Password == password).Role;
+        }
 
         public async Task<RoleModel> GetByUserIdAsync(int userId)
         {

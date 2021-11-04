@@ -2,7 +2,6 @@
 using GraphQL.Types;
 using Microsoft.AspNetCore.Http;
 using Portfolio.GraphQL.Types;
-using Portfolio.Models;
 using Portfolio.Repositories;
 
 namespace Portfolio.GraphQL
@@ -27,13 +26,13 @@ namespace Portfolio.GraphQL
             Field<UserType>("user",
                 description: "Returns a Single User",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id", Description = "User Id" }),
-                resolve: context => userRep.GetById(context.GetArgument<int>("id")))
+                resolve: context => userRep.Get(context.GetArgument<int>("id")))
                 .AuthorizeWith("Authenticated");
 
 
             Field<UserType>("currentUser",
                 description: "Returns a Cureent User",
-                resolve: context => userRep.GetUserWithRoleByLogin(httpContextAccessor.HttpContext.User.Identity.Name))
+                resolve: context => userRep.Get(httpContextAccessor.HttpContext.User.Identity.Name))
                 .AuthorizeWith("Authenticated");
 
 

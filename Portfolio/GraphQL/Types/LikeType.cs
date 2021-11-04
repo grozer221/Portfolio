@@ -19,7 +19,7 @@ namespace Portfolio.GraphQL.Types
             Field<UserType>(
                 name: nameof(CommentModel.User),
                 description: "User who created Like",
-                resolve: context => usersRep.GetById(context.Source.UserId));
+                resolve: context => usersRep.Get(context.Source.UserId));
         }
     }
 }

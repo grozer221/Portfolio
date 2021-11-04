@@ -23,7 +23,7 @@ export const Project: React.FC<PropsType> = ({project}) => {
                     <h3 className={s.titleTechnologies}>Technologies :</h3>
                     <ul className={s.technologies}>
                         {project.technologies.map(technology => (
-                            <li className={s.technology}>
+                            <li className={s.technology} key={technology.id}>
                                 <div className={s.technologyColor}
                                      style={{backgroundColor: technology.color ? technology.color : 'white'}}/>
                                 <div>{technology.name}</div>

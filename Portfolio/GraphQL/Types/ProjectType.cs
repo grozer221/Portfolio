@@ -43,7 +43,7 @@ namespace Portfolio.GraphQL.Types
             Field<UserType>(
                 name: nameof(ProjectModel.User),
                 description: "User who create Project",
-                resolve: context => usersRep.GetById(context.Source.UserId));
+                resolve: context => usersRep.Get(context.Source.UserId));
 
             Field<ListGraphType<TechnologyType>>(
                 name: nameof(ProjectModel.Technologies),

@@ -43,3 +43,9 @@ export type UserType = {
     login: string,
     role: RoleType,
 }
+
+
+
+export type AuthType = UserType & {
+    token: string,
+}

@@ -17,7 +17,7 @@ export const Projects: React.FC = () => {
     return (
         <div className={s.projects}>
             {data?.projects?.map((project) => (
-                <Project project={project}/>
+                <Project project={project} key={project.id}/>
             ))}
         </div>
     );

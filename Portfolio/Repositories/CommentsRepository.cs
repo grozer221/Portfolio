@@ -37,7 +37,7 @@ namespace Portfolio.Repositories
         public async Task AddComment(string text, int projectId, string userLogin)
         {
             ProjectModel project = await _projectRep.GetProjectIncludedUsersCommentsByIdAsync(projectId);
-            UserModel user = await _usersRep.GetByLoginAsync(userLogin);
+            UserModel user = await _usersRep.GetAsync(userLogin);
             project.Comments.Add(new CommentModel
             {
                 User = user,

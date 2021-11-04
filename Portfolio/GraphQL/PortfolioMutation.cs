@@ -1,10 +1,8 @@
 ﻿using GraphQL;
 using GraphQL.Types;
-using Microsoft.AspNetCore.Http;
-using Portfolio.Models;
+using Portfolio.GraphQL.Types;
 using Portfolio.Repositories;
 using Portfolio.Services;
-using Portfolio.Utils;
 
 namespace Portfolio.GraphQL
 {
@@ -14,7 +12,7 @@ namespace Portfolio.GraphQL
         {
             Name = "Mutation";
 
-            Field<StringGraphType>(
+            Field<UserType>(
                   "authentication",
                   arguments: new QueryArguments(
                       new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "login", Description = "User login." },
@@ -24,12 +22,9 @@ namespace Portfolio.GraphQL
                   {
                       string login = context.GetArgument<string>("login");
                       string password = context.GetArgument<string>("password");
-                      UserModel user = usersRep.GetUserWithRoleByLogin(login, Hashing.GetHashString(password));
-                      if (user == null)
-                          return "";
-                      return identityService.GenerateAccessToken(user.Id, user.Login, user.Role.RoleName);
+                      return usersRep.Get(login, password);
                   },
-                  description: "Returns JWT."
+                  description: "Returns authorized user with token."
               );
         }
     }

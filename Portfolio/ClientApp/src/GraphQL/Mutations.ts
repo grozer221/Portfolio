@@ -1,7 +1,8 @@
 import {gql} from '@apollo/client';
+import {AuthType} from "../types/types";
 
 export type AuthenticationData = {
-    authentication: string,
+    authentication: AuthType,
 }
 
 export type AuthenticationVars = {
@@ -10,7 +11,14 @@ export type AuthenticationVars = {
 }
 
 export const AUTHENTICATION = gql`
-    mutation Authentication($login: String!, $password: String!){
-        authentication(login: $login, password: $password)
+mutation Authentication($login: String!, $password: String!){
+    authentication(login: $login, password: $password){
+    id
+    login
+    role{
+      roleName
     }
+    token
+  }
+}
 `

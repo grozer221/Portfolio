@@ -1,18 +1,17 @@
 import React from "react";
 import s from './NavBar.module.css'
 import {useDispatch, useSelector} from "react-redux";
-import {s_getCurrentUser, s_getIsAuth} from "../../redux/auth-selectors";
+import {s_getAuthData, s_getIsAuth} from "../../redux/auth-selectors";
 import {Link} from "react-router-dom";
-import Cookies from "js-cookie";
 import {actions} from "../../redux/auth-reducer";
 
 export const NavBar: React.FC = () => {
     const isAuth = useSelector(s_getIsAuth);
-    const currentUser = useSelector(s_getCurrentUser);
+    const currentUser = useSelector(s_getAuthData);
     const dispatch = useDispatch();
 
     const logoutHandler = () => {
-        Cookies.remove('token');
+        localStorage.removeItem('token');
         dispatch(actions.setAuthData(null, false));
     }
 
@@ -42,7 +41,6 @@ export const NavBar: React.FC = () => {
                         </div>
                     </div>
                     : <Link to={'/login'} className={s.navItem}>Login</Link>}
-
             </div>
         </div>
     );

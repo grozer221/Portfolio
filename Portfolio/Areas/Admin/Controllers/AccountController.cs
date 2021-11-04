@@ -34,7 +34,7 @@ namespace Portfolio.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                UserModel user = _usersRep.GetUserWithRoleByLogin(model.Login, Hashing.GetHashString(model.Password));
+                UserModel user = _usersRep.GetIncludedRole(model.Login, model.Password);
                 if (user != null)
                 {
                     await Authenticate(user.Login, user.Role.RoleName);
@@ -57,7 +57,7 @@ namespace Portfolio.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                UserModel user = await _usersRep.GetByLoginIncludedRoleAsync(model.Login);
+                UserModel user = await _usersRep.GetIncludedRoleAsync(model.Login);
                 if (user == null)
                 {
                     RoleModel userRole = await _rolesRep.GetRoleByName("user");

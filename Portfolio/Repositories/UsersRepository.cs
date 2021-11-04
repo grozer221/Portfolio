@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Portfolio.Models;
+using Portfolio.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,26 +16,79 @@ namespace Portfolio.Repositories
             _ctx = ctx;
         }
 
-        //public async Task<UserModel> GetUserIncludedRoleById(int id)
-        //{
-        //    return await _ctx.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == id);
-        //}
-        
-        
-        public UserModel GetById(int id)
+        public UserModel Get(int id)
         {
             return _ctx.Users.Find(id);
         }
 
-        public async Task<UserModel> GetByLoginIncludedRoleAsync(string login)
+        public List<UserModel> Get(int pageNumber = 1, int pageSize = 6)
         {
-            return await _ctx.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Login == login);
+            return _ctx.Users.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+        }
+
+        public UserModel Get(string login)
+        {
+            return _ctx.Users.FirstOrDefault( u => u.Login == login);
         }
         
-        public async Task<UserModel> GetByLoginAsync(string login)
+        public UserModel Get(string login, string password)
         {
-            return await _ctx.Users.FirstOrDefaultAsync(u => u.Login == login);
+            return _ctx.Users.FirstOrDefault( u => u.Login == login && u.Password == Hashing.GetHashString(password));
         }
+        
+        
+        public async Task<UserModel> GetAsync(int id)
+        {
+            return await _ctx.Users.FindAsync(id);
+        }
+
+        public async Task<List<UserModel>> GetAsync(int pageNumber = 1, int pageSize = 6)
+        {
+            return await _ctx.Users.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+        }
+
+        public async Task<UserModel> GetAsync(string login)
+        {
+            return await _ctx.Users.FirstOrDefaultAsync( u => u.Login == login);
+        }
+
+        public async Task<UserModel> GetAsync(string login, string password)
+        {
+            return await _ctx.Users.FirstOrDefaultAsync( u => u.Login == login && u.Password == Hashing.GetHashString(password));
+        }
+
+        
+        public UserModel GetIncludedRole(int id)
+        {
+            return _ctx.Users.Include(u => u.Role).FirstOrDefault(u => u.Id == id);
+        }
+        
+        public UserModel GetIncludedRole(string login)
+        {
+            return _ctx.Users.Include(u => u.Role).FirstOrDefault( u => u.Login == login);
+        }
+        
+        public UserModel GetIncludedRole(string login, string password)
+        {
+            return _ctx.Users.Include(u => u.Role).FirstOrDefault( u => u.Login == login && u.Password == Hashing.GetHashString(password));
+        }
+        
+        
+        public async Task<UserModel> GetIncludedRoleAsync(int id)
+        {
+            return await _ctx.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == id);
+        }
+        
+        public async Task<UserModel> GetIncludedRoleAsync(string login)
+        {
+            return await _ctx.Users.Include(u => u.Role).FirstOrDefaultAsync( u => u.Login == login);
+        }
+        
+        public async Task<UserModel> GetIncludedRoleAsync(string login, string password)
+        {
+            return await _ctx.Users.Include(u => u.Role).FirstOrDefaultAsync( u => u.Login == login && u.Password == Hashing.GetHashString(password));
+        }
+
 
         public async Task<List<UserModel>> GetByRoleId(int roleId)
         {
@@ -42,35 +96,10 @@ namespace Portfolio.Repositories
             return role.Users;
         }
 
-        public UserModel GetUserWithRoleByLogin(string login, string password)
-        {
-            return _ctx.Users.Include(u => u.Role).FirstOrDefault(u => u.Login == login && u.Password == password);
-        }
-
-        public UserModel GetUserWithRoleByLogin(string login)
-        {
-            return _ctx.Users.Include(u => u.Role).FirstOrDefault(u => u.Login == login);
-        }
-        
-        public async Task<UserModel> GetUserWithRoleByLoginAsync(string login)
-        {
-            return await _ctx.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Login == login);
-        }
-
         public async Task AddUser(UserModel user)
         {
             _ctx.Users.Add(user);
             await _ctx.SaveChangesAsync();
-        }
-
-        //public async Task<List<UserModel>> GetUsersIncludedRoleAsync(int pageNumber = 1, int pageSize = 6)
-        //{
-        //    return await _ctx.Users.Include(u => u.Role).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
-        //}
-        
-        public List<UserModel> Get(int pageNumber = 1, int pageSize = 6)
-        {
-            return _ctx.Users.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
         }
     }
 }

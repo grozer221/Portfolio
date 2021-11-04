@@ -22,7 +22,7 @@ namespace Portfolio.GraphQL.Types
 
             Field<UserType>(
                 name: nameof(CommentModel.User),
-                resolve: context => userRep.GetById(context.Source.UserId),
+                resolve: context => userRep.Get(context.Source.UserId),
                 description: "User who created Comment");
         }
     }

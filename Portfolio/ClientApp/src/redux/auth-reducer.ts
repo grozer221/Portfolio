@@ -1,8 +1,8 @@
 import {BaseThunkType, InferActionsTypes} from "./redux-store";
-import {UserType} from "../types/types";
+import {AuthType} from "../types/types";
 
 let initialState = {
-    currentUser: null as null | UserType,
+    authData: null as null | AuthType,
     isAuth: false,
 };
 
@@ -19,9 +19,9 @@ const authReducer = (state = initialState, action: ActionsType): InitialStateTyp
 };
 
 export const actions = {
-    setAuthData: (currentUser: UserType | null, isAuth: boolean) => ({
+    setAuthData: (authData: AuthType | null, isAuth: boolean) => ({
         type: 'SET_AUTH_DATA',
-        payload: {currentUser, isAuth}
+        payload: {authData, isAuth}
     } as const),
 }
 
